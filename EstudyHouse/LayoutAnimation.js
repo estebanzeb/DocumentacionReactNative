@@ -7,7 +7,7 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-const App = () => {
+const App3 = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -43,4 +43,4 @@ const style = StyleSheet.create({
   }
 });
 
-export default App;
+export default App3;
