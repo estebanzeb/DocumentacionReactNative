@@ -1,188 +1,181 @@
-import React from 'react';
-import { Alert,StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+//Importamos react
+import React, { useState } from "react";
 
-export default class App extends React.Component {
+//Importamos de react native "Text"
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from "react-native";
 
-/*Estado
-Hay dos tipos de datos que controlan un componente:
-  propsy state. props los establece el padre y
-  se fijan a lo largo de la vida útil de un componente.
-  Para los datos que van a cambiar, tenemos que usar state.
+//Importamos las imagenes
+/*import imageIM from './assets/imagen.png'*/
+import imageIM from './assets/Ruby-Diamond.gif'
 
-  En general, debe inicializar state en el constructor y
-  luego llamar setState cuando desee cambiarlo.*/
+//Importamos image piker (Elejir la imagen) un selector de imagenes
+import * as ImagePicker from "expo-image-picker";
 
-  constructor(props) {
+//Importamos para compartir
+import * as Sharing from "expo-sharing";
 
-    super(props)
+import uploadToAnonymousFilesAsync from 'anonymous-files';
 
-    this.state = {
-      TextInput_identificacion: '',
-      TextInput_nombres_completos:'',
-      TextInput_asignatura:'',
-      TextInput_numero_telefono:'',
-      TextInput_correo_electronico:'',
+//Componente App
+const App = () => {
+
+    const [selectedImage, setSelectedImage] = useState(null)
+
+    //Abrir la biblioteca para abrir el selector de imagenes
+    let openImagePickerAsync = async () => {
+      //metodo para pedir permisos para la lectura de imagenes
+      let permissionResult = await ImagePicker.requestCameraPermissionsAsync(); //Esta pidiendo permisos
+
+     //Si no acepto el permiso se envia una alerta
+    if (permissionResult.granted === false) {
+      alert("Permission to camara roll is required");
+      return;
     }
 
-  }
+    const pickerResult = await ImagePicker.launchImageLibraryAsync()
+    //console.log(pickerResult);
 
-  //Codificación de funciones
-  InsertarEstudiante = () => {
+      if (pickerResult.cancelled === true) {
+        return;
+      }
+      
+    if (Platform.OS === "web") {
+      const remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri)
+      console.log(remoteUri);
+      //setSelectedImage({ localUri: pickerResult.uri, remoteUri });
+    } else {
+      setSelectedImage({ localUri: pickerResult.uri });
+    }
 
-  } 
+    };
 
-  ActualizarEstudiantes = () => {
+    const openShareDialog = async () => {
+      //Valida si el dispositivo puede compartir imagenes
+      if (!(await Sharing.isAvailableAsync())) {
+        // alert("Sharing, is not available on your platform");
+        alert(
+          `The image share is available for sharing at: ${selectedImage.remoteUri}`
+        );
+        return;
+      }
 
-  }
+      await Sharing.shareAsync(selectedImage.localUri);
+    };
 
-  BorrarEstudiantes = () => {
-    
-  }
 
-  BuscarEstudiantes = () => {
-    
-  }
 
-  ListarEstudiantes = () => {
-    
-  }
-
-  AlertBotones = () =>
-    Alert.alert(
-      "CRUD",
-      "Estudiantes",
-      [
-        {
-          text: "Luego",
-          onPress: () => console.log("Luego")
-        },
-        {
-          text: "Cancelar",
-          onPress: () => console.log("Presionó Cancelar"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Presionado") }
-      ],
-      { cancelable: false }
-    );
-
-  //Fin de funciones generales
-
-  //Comienzo de la aplicación
-  render() {
     return (
-      <View style={styles.Contenedor}>
-        <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 7 }}> CRUD para Estudiantes </Text>
-        <TextInput
-          placeholder="Digite la identificación"
-          onChangeText={TextInputValue => this.setState({ TextInput_identificacion: TextInputValue })}
-          underlineColorAndroid='transparent'
-          style={styles.ClaseEstilosTextInput}
-          value={this.state.TextInput_identificacion}
-        />
-        
-        <TextInput>
-          placeholder="Digite el nombre"
-          onChangeText={TextInputValue => this.setState({ TextInput_asignatura: TextInputValue })}
-          underlineColorAndroid='transparent'
-          style={styles.ClaseEstilosTextInput}
-          value={this.state.TextInput_asignatura}
-        </TextInput>
-        
-        <TextInput>
-          placeholder="Digite la asignatura"
-          onChangeText={TextInputValue => this.setState({ TextInput_identificacion: TextInputValue })}
-          underlineColorAndroid='transparent'
-          style={styles.ClaseEstilosTextInput}
-          value={this.state.TextInput_nombres_completos}
-        </TextInput>
 
-        <TextInput>
-          placeholder="Digite el numero de teléfono"
-          onChangeText={TextInputValue => this.setState({ TextInput_numero_telefono: TextInputValue })}
-          underlineColorAndroid='transparent'
-          style={styles.ClaseEstilosTextInput}
-          value={this.state.TextInput_numero_telefono}
-        </TextInput>
+    <View style={styles.container}>
 
-        <TextInput>
-          placeholder="Digite correo electronico"
-          onChangeText={TextInputValue => this.setState({ TextInput_correo_electronico: TextInputValue })}
-          underlineColorAndroid='transparent'
-          style={styles.ClaseEstilosTextInput}
-          value={this.state.TextInput_correo_electronico}
-        </TextInput>
+      <Text style={styles.title}>
+        Pick an Image!!
+      </Text>
+      
+      <TouchableOpacity   
+      //Se coloca el onpress dentro de la etiqueta de imagen para que al presionar la imagen, se realice al accion
+      onPress={openImagePickerAsync}>
+    <Image style={styles.image2}
+    
+    source={{uri: selectedImage !== null ? selectedImage.localUri :'https://picsum.photos/600/600'}}>
+    </Image>
+      </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={.4} style={styles.TouchableOpacityStyle} onPress={this.ActualizarEstudiantes}>
-          <Text style={styles.TextStyle}> Actualizar </Text>
-        </TouchableOpacity>
+      {
+        selectedImage ? ( <TouchableOpacity
+          style={styles.button}
+          onpress={openShareDialog}
+          >
+          <Text style={styles.buttonText}>Share this image</Text>
+          </TouchableOpacity>
+          ) : (
+            <View/>
+          )}
 
-        <TouchableOpacity activeOpacity={.4} style={styles.TouchableOpacityStyle} onPress={this.BorrarEstudiantes}>
-          <Text style={styles.TextStyle}> Borrar </Text>
-        </TouchableOpacity>
+    </View>
 
-        <TouchableOpacity activeOpacity={.4} style={styles.TouchableOpacityStyle} onPress={this.BuscarEstudiantes}>
-          <Text style={styles.TextStyle}> Buscar </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={.4} style={styles.TouchableOpacityStyle} onPress={this.ListarEstudiantes}>
-          <Text style={styles.TextStyle}> Listar </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={.4} style={styles.TouchableOpacityStyle} onPress={this.InsertarEstudiante}>
-          <Text style={styles.TextStyle}> Insetar </Text>
-        </TouchableOpacity>
-
-      </View>
-    );
-  }
-}
+  );
+};
 
 const styles = StyleSheet.create({
 
-  Contenedor: {
-
-    alignItems: 'center',
+  container: {
     flex: 1,
-    paddingTop: 30,
-    backgroundColor: '#fff'
+    justifyContent: "center",
+    alignItems: "center",
+},
 
+  title: {
+    fontSize:30,
+    color: "#ffff00",
+    },
+
+  image: {height:300, width: 380},
+
+  image2: { height: 500, width: 500, borderRadius: 500, resizeMode:'contain' },
+
+  button: {
+    backgroundColor:'blue',
+    padding:7,
+    marginTop:8,
   },
 
-  ClaseEstilosTextInput: {
-
-    textAlign: 'center',
-    width: '80%',
-    marginBottom: 7,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#8BC34A',
-    borderRadius: 5,
-
+  buttonText: {
+    color:'white',
+    fontSize: 18,
   },
 
-  TouchableOpacityStyle: {
-
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 5,
-    marginBottom: 7,
-    width: '50%',
-    backgroundColor: '#4CAF50'
-
-  },
-
-  TextStyle: {
-    color: '#fff',
-    textAlign: 'center',
-  },
-
-  rowViewContainer: {
-    fontSize: 20,
-    paddingRight: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-  }
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: 'blue',
+    borderBottomWidth: StyleSheet.hairlineWidth
+},
 
 });
 
+const Separator = () => (
+  <View style={styles.separator} />
+
+);
+
+export default App;
+
+
+/*
+    <Button
+      color="red"
+      title="Press"
+      onPress={() => Alert.alert('Hello!!!')}Error
+    />
+    */
+
+
+  /*<View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+
+
+  <Text style={{fontSize:30}}>
+    Hello, world
+  </Text>
+
+  </View>
+
+  <Image
+      source = {imageIM}
+      style = {styles.image2}
+      />
+
+    onPress={() => Alert.alert('Simple Button pressed')}//Error
+
+  <Image style={styles.image} source={imageIM}>  </Image>
+
+  
+
+ */
