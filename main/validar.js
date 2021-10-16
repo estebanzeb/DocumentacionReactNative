@@ -13,6 +13,8 @@ export default class ValidarNumeros extends Component{
         if (/^\d+$/.test(text))
         {
             this.setState({text:text});
+        }else{
+            this.setState({text:''});
         }
     }
 
@@ -29,13 +31,6 @@ export default class ValidarNumeros extends Component{
                         underlineColorAndroid='transparent'
                         style={MisEstilos.ClaseEstilosTextInput}
                     />
-
-                    <TouchableOpacity
-                    activeOpacity={0.4} 
-                    style={ MisEstilos.EstiloBoton}
-                    onPress={this.Sumar}>
-                    <Text style={MisEstilos.TextoTitulos} >Sumar</Text>
-                    </TouchableOpacity>
                     
             </View> 
             );
