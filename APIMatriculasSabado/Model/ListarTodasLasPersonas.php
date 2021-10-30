@@ -31,7 +31,7 @@ if ($connection->connect_error){
                 //Levamos el dato a una variable
                 $item = $row;
                 //Lo convertimos en JSON
-                $json = json_encode($item,true); 
+                $json = json_encode($item,JSON_UNESCAPED_UNICODE); 
                 echo($json);
             }
         }else{
