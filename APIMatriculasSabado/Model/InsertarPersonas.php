@@ -46,7 +46,10 @@ if ($connection->connect_error){
             $Mensaje = "EcHo";
             //$Mensaje = "La persona fue registrada correctamente";
             $json = json_encode($SQL,JSON_UNESCAPED_UNICODE);
+            echo $json;
+        }else{
+            echo ("Error");
         }
     }
-
+    mysqli_close($connection);
 ?>

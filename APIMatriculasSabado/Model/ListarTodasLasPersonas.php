@@ -38,7 +38,7 @@ if ($connection->connect_error){
             echo("No se encontraron datos para mostrar");
         }
     }
-
+    mysqli_close($connection);
 ?>
 
 
