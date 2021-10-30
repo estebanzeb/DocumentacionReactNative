@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //Vamos a invocar las cabeceras para dar permisos de ejecucíon a los llamados de la API desde cualquier Aplicación
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
@@ -21,7 +21,8 @@ if ($connection->connect_error){
     die("La conexion no se pudo realizar: " .$connection->connect_error);
 }else{
     //Ahora vamos a construir la consulta
-    $SQL='SELECT * FROM persona';
+    //$SQL='SELECT * FROM persona';
+    $SQL='INSERT INTO persona(id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, fecha_nacimiento, sexo, tipo, Clave) VALUES ()';
     $resultado = $connection->query($SQL);
 
     //Validar si se devuelven datos
