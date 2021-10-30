@@ -15,14 +15,38 @@ include '../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 $connection = new mysqli($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
+if ($connection->connect_error){
 
-// Obteniendo los datos en la variable $json.
-$json = file_get_contents('php://input');
+    die("La conexion no se pudo realizar: " .$connection->connect_error);
 
-// Decodificando los datos en formato JSON en la variables $obj.
-$obj = json_decode($json,JSON_UNESCAPED_UNICODE);
+    }else{
+            
+        $json = file_get_contents('php://input');
+        $obj = json_decode($json,true);
 
-$SQL='INSERT INTO persona(id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, fecha_nacimiento, sexo, tipo, Clave) VALUES ()';
-    $resultado = $connection->query($SQL);
+        $id= $obj['id'];
+        $nif = $obj['nif'];
+        $nombre = $obj['nombre'];
+        $apellido1 = $obj['apellido1'];
+        $apellido2 = $obj['apellido2'];
+        $ciudad = $obj['ciudad'];
+        $direccion = $obj['direccion'];
+        $telefono = $obj['telefono'];
+        $fecha_nacimiento = $obj['fecha_nacimiento'];
+        $sexo = $obj['sexo'];
+        $tipo = $obj['tipo'];
+        $Clave = $obj['Clave'];
+
+        // Instrucción SQL para agregar el estudiante.
+        $SQL="INSERT INTO persona (nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, fecha_nacimiento, sexo, tipo, Clave) VALUES ('$nif', '$nombre', '$apellido1', '$apellido2', '$ciudad', '$direccion', '$telefono', '$fecha_nacimiento', '$sexo', '$tipo', '$Clave')";
+
+        //Ahora vamos a ejecutar la instruccion SQL anterior
+        if(mysqli_query($SQL_QUERY)){
+
+            $Mensaje = "EcHo";
+            //$Mensaje = "La persona fue registrada correctamente";
+            $json = json_encode($SQL,JSON_UNESCAPED_UNICODE);
+        }
+    }
 
 ?>
