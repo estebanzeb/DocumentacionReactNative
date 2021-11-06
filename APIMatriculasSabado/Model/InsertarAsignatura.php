@@ -45,7 +45,7 @@ if ($connection->connect_error){
             $json = json_encode($Mensaje);
             echo $json;
         }else{
-            echo ("Error ,$SQL");
+            echo ("Error");
         }
     }
     mysqli_close($connection);
