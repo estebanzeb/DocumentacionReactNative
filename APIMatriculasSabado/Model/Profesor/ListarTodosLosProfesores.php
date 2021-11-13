@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //Vamos a invocar las cabeceras para dar permisos de ejecucíon a los llamados de la API desde cualquier Aplicación
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
@@ -9,7 +9,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
 // Importar la conexion (PARAMETROS)
-include '../Connection/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 
@@ -21,7 +21,7 @@ if ($connection->connect_error){
     die("La conexion no se pudo realizar: " .$connection->connect_error);
 }else{
     //Ahora vamos a construir la consulta
-    $SQL='SELECT * FROM persona';
+    $SQL='SELECT * FROM profesor';
     $resultado = $connection->query($SQL);
 
     //Validar si se devuelven datos
@@ -31,14 +31,14 @@ if ($connection->connect_error){
                 //Levamos el dato a una variable
                 $item = $row;
                 //Lo convertimos en JSON
-                $json = json_encode($item,JSON_UNESCAPED_UNICODE); 
+                $json = json_encode($item,true); 
                 echo($json);
             }
         }else{
-            echo("No se encontraron datos para mostrar");
+            echo("No se encontraron datos de profesor para mostrar");
         }
     }
-    mysqli_close($connection);
+
 ?>
 
 

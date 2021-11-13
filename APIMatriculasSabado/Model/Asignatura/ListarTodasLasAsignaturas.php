@@ -9,7 +9,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
 // Importar la conexion (PARAMETROS)
-include '../Connection/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 
@@ -21,7 +21,7 @@ if ($connection->connect_error){
     die("La conexion no se pudo realizar: " .$connection->connect_error);
 }else{
     //Ahora vamos a construir la consulta
-    $SQL='SELECT * FROM curso_escolar';
+    $SQL='SELECT * FROM asignatura';
     $resultado = $connection->query($SQL);
 
     //Validar si se devuelven datos

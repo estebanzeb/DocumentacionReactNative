@@ -11,7 +11,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
 // Importar la conexion (PARAMETROS)
-include '../Connection/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 $connection = mysqli_connect($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
@@ -26,11 +26,11 @@ if ($connection->connect_error){
         $obj = json_decode($json,true);
 
         $id= $obj['id'];
-        $nombre = $obj['nombre'];
-
+        $ano_inicio = $obj['ano_inicio'];
+        $ano_fin = $obj['ano_fin'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="INSERT INTO persona (nombre) VALUES ('$nombre')";
+        $SQL="INSERT INTO persona (ano_inicio, ano_fin) VALUES ('$ano_inicio', '$ano_fin')";
             
         //Ahora vamos a ejecutar la instruccion SQL anterior
         if(mysqli_query($connection,$SQL)){

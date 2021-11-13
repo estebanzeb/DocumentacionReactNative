@@ -11,7 +11,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
 // Importar la conexion (PARAMETROS)
-include '../Connection/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 $connection = mysqli_connect($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
@@ -25,17 +25,21 @@ if ($connection->connect_error){
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
 
-        //$id= $obj['id'];
+        $id= $obj['id'];
+        $nif = $obj['nif'];
         $nombre = $obj['nombre'];
-        $creditos = $obj['creditos'];
+        $apellido1 = $obj['apellido1'];
+        $apellido2 = $obj['apellido2'];
+        $ciudad = $obj['ciudad'];
+        $direccion = $obj['direccion'];
+        $telefono = $obj['telefono'];
+        $fecha_nacimiento = $obj['fecha_nacimiento'];
+        $sexo = $obj['sexo'];
         $tipo = $obj['tipo'];
-        $curso = $obj['curso'];
-        $cuatrimestre = $obj['cuatrimestre'];
-        $id_profesor = $obj['id_profesor'];
-        $id_grado = $obj['id_grado'];
+        $Clave = $obj['Clave'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="INSERT INTO persona (nombre, creditos, tipo, curso, cuatrimestre, id_profesor, id_grado) VALUES ('$nombre', '$creditos', '$tipo', '$curso', '$cuatrimestre', '$id_profesor', '$id_grado')";
+        $SQL="INSERT INTO persona (nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, fecha_nacimiento, sexo, tipo, Clave) VALUES ('$nif', '$nombre', '$apellido1', '$apellido2', '$ciudad', '$direccion', '$telefono', '$fecha_nacimiento', '$sexo', '$tipo', '$Clave')";
             
         //Ahora vamos a ejecutar la instruccion SQL anterior
         if(mysqli_query($connection,$SQL)){

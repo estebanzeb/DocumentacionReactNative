@@ -11,7 +11,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
 // Importar la conexion (PARAMETROS)
-include '../Connection/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 // Conectar a la base de datos
 $connection = mysqli_connect($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
