@@ -29,7 +29,7 @@ if ($connection->connect_error){
         $id= $obj['id'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="DELETE FROM persona WHERE id= $id";
+        $SQL="DELETE FROM departamento WHERE id= $id";
         
         //echo ("$SQL");     
         //Ahora vamos a ejecutar la instruccion SQL anterior

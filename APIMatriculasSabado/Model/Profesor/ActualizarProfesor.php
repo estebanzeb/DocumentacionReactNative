@@ -26,21 +26,11 @@ if ($connection->connect_error){
         $obj = json_decode($json,true);
 
         //var_dump ($json);
-        $id= $obj['id'];
-        $nif = $obj['nif'];
-        $nombre = $obj['nombre'];
-        $apellido1 = $obj['apellido1'];
-        $apellido2 = $obj['apellido2'];
-        $ciudad = $obj['ciudad'];
-        $direccion = $obj['direccion'];
-        $telefono = $obj['telefono'];
-        $fecha_nacimiento = $obj['fecha_nacimiento'];
-        $sexo = $obj['sexo'];
-        $tipo = $obj['tipo'];
-        $Clave = $obj['Clave'];
+        $id_profesor= $obj['id_profesor'];
+        $id_departamento  = $obj['id_departamento '];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="UPDATE persona SET nif='$nif', nombre='$nombre', apellido1='$apellido1', apellido2='$apellido2', ciudad='$ciudad', direccion='$direccion', telefono='$telefono', fecha_nacimiento='$fecha_nacimiento', sexo='$sexo', tipo='$tipo' WHERE id= $id";
+        $SQL="UPDATE profesor SET id_profesor='$id_profesor', id_departamento ='$id_departamento' WHERE id= $id";
         
         //echo ("$SQL");     
         //Ahora vamos a ejecutar la instruccion SQL anterior

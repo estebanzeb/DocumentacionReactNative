@@ -24,7 +24,7 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   //Ahora creamos las funciones de esta clase
-  InsertarPersona = () => {
+  Insertar = () => {
     //Ahora vamos a consumir al API: APIMatriculasSabado
     fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/InsertarPersona.php',{
       method:'POST',
@@ -62,7 +62,7 @@ export default class Persona extends React.Component{
 
   } 
 //-----------------------------------------------------------------------------------
-  ActualizarPersona = () => {
+  Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
     fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
       method: 'PUT',
@@ -97,7 +97,7 @@ export default class Persona extends React.Component{
       });
   }
 //-----------------------------------------------------------------------------------
-  BorrarPersona = () => {
+  Borrar = () => {
     fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/EliminarPersona.php',{
       method:'DELETE',
       headers:{
@@ -122,7 +122,7 @@ export default class Persona extends React.Component{
     });
   }
 //-----------------------------------------------------------------------------------
-  ListarTodasLasPersonas = () => {
+  ListarTodas = () => {
     fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/ListarTodasLasPersonas.php',{
       method:'GET',
       headers:{
@@ -161,7 +161,7 @@ export default class Persona extends React.Component{
     })
   }
 //-----------------------------------------------------------------------------------
-  ListarPersona = () => {
+  Listar = () => {
       fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarLaPersona.php',{
         method:'GET',
         headers:{
@@ -202,12 +202,77 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   render(){
     return (
-    <View>
-    
+    <View style={MisEstilos.MainContainer}>
+
+      <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
+        Registro de personas</text>
+
+    <TextInput
+    placeholder="Ingrese el ID de la persona"
+    onChangeText={TextInputValue => this.setState({
+      TextInput_id: TextInputValue
+    })}//Se captura el dato
+    underlineColorAndroid='transparent'
+    style={MisEstilos.TextInputStyleClass}
+    value={this.state.TextInput_id}
+    ></TextInput>
+
+    <TextInput
+    placeholder="Ingrese el NIF de la persona"
+    onChangeText={TextInputValue => this.setState({
+      TextInput_nif: TextInputValue
+    })}//Se captura el dato
+    underlineColorAndroid='transparent'
+    style={MisEstilos.TextInputStyleClass}
+    value={this.state.TextInput_nif}
+    autoFocus={true}
+    ></TextInput>
+
+
+    <TouchableOpacity
+    activeOpacity={0.4}
+    style={MisEstilos.TouchableOpacityStyle}
+    onPress={this.Insertar}
+    ></TouchableOpacity>
+
     </View>
     );
   }
 }
+//-----------------------------------------------------------------------------------
 const MisEstilos = StyleSheet.create({
-
+  MainContainer:{
+    alignItems: 'center',
+    flex: 1,
+    paddingTop: 30,
+    backgroundColor: '#fff'
+  },
+  TextInputStyleClass:{
+    textAlign: 'center',
+    width: '90%',
+    marginTop:7,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ff5722',
+    borderRadius: 5,
+  },
+  TouchableOpacityStyle:{
+    paddingTop:10,
+    paddingBottom: 10,
+    borderRadius: 5,
+    marginBottom:50,
+    width:'90%',
+    backgroundColor: '#08BCD4'
+  },
+  TextStyle:{
+    color:'fff',
+    textAlign: 'center',
+  },
+  rowViewContainer:{
+    fontSize: 20,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingBottom: 10,
+  }
 });

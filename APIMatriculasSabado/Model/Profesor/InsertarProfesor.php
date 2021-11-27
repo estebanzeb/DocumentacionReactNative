@@ -29,7 +29,7 @@ if ($connection->connect_error){
         $id_departamento = $obj['id_departamento'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="INSERT INTO persona (id_profesor, id_departamento) VALUES ('$id_profesor', '$id_departamento')";
+        $SQL="INSERT INTO profesor (id_profesor, id_departamento) VALUES ('$id_profesor', '$id_departamento')";
             
         //Ahora vamos a ejecutar la instruccion SQL anterior
         if(mysqli_query($connection,$SQL)){

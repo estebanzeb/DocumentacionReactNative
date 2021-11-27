@@ -27,20 +27,16 @@ if ($connection->connect_error){
 
         //var_dump ($json);
         $id= $obj['id'];
-        $nif = $obj['nif'];
         $nombre = $obj['nombre'];
-        $apellido1 = $obj['apellido1'];
-        $apellido2 = $obj['apellido2'];
-        $ciudad = $obj['ciudad'];
-        $direccion = $obj['direccion'];
-        $telefono = $obj['telefono'];
-        $fecha_nacimiento = $obj['fecha_nacimiento'];
-        $sexo = $obj['sexo'];
+        $creditos = $obj['creditos'];
         $tipo = $obj['tipo'];
-        $Clave = $obj['Clave'];
+        $curso = $obj['curso'];
+        $cuatrimestre = $obj['cuatrimestre'];
+        $id_profesor  = $obj['id_profesor '];
+        $id_grado  = $obj['id_grado '];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="UPDATE persona SET nif='$nif', nombre='$nombre', apellido1='$apellido1', apellido2='$apellido2', ciudad='$ciudad', direccion='$direccion', telefono='$telefono', fecha_nacimiento='$fecha_nacimiento', sexo='$sexo', tipo='$tipo' WHERE id= $id";
+        $SQL="UPDATE asignatura SET  nombre='$nombre', creditos='$creditos', tipo='$tipo', curso='$curso', curso='$curso', cuatrimestre='$cuatrimestre', id_profesor='$id_profesor', id_grado='$id_grado' WHERE id= $id";
         
         //echo ("$SQL");     
         //Ahora vamos a ejecutar la instruccion SQL anterior

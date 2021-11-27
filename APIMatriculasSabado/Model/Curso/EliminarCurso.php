@@ -25,17 +25,17 @@ if ($connection->connect_error){
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
 
+        //var_dump ($json);
         $id= $obj['id'];
-        $ano_inicio = $obj['ano_inicio'];
-        $ano_fin = $obj['ano_fin'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="INSERT INTO persona (ano_inicio, ano_fin) VALUES ('$ano_inicio', '$ano_fin')";
-            
+        $SQL="DELETE FROM curso_escolar WHERE id= $id";
+        
+        //echo ("$SQL");     
         //Ahora vamos a ejecutar la instruccion SQL anterior
         if(mysqli_query($connection,$SQL)){
 
-            $Mensaje = "GRABADO";
+            $Mensaje = "Eliminado";
             //$Mensaje = "La persona fue registrada correctamente";
             $json = json_encode($Mensaje);
             echo $json;

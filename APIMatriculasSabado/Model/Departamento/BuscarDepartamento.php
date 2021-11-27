@@ -21,7 +21,7 @@ if ($connection->connect_error){
     die("La conexion no se pudo realizar: " .$connection->connect_error);
 }else{
     //Ahora vamos a construir la consulta
-    $SQL="SELECT * FROM persona WHERE id = '$id'";
+    $SQL="SELECT * FROM departamento WHERE id = '$id'";
     $resultado = $connection->query($SQL);
 
     //Validar si se devuelven datos
