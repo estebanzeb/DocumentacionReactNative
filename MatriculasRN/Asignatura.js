@@ -187,6 +187,40 @@ render(){
       <TextInput
       placeholder="Ingrese el tipo de la persona"
       onChangeText={TextInputValue => this.setState({
+        TextInput_id: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_id}
+      autoFocus={true}
+    ></TextInput>
+
+    
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_nombre: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_nombre}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_creditos: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_creditos}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
         TextInput_tipo: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
@@ -195,15 +229,47 @@ render(){
       autoFocus={true}
     ></TextInput>
 
-    
     <TextInput
       placeholder="Ingrese la clave de la persona"
       onChangeText={TextInputValue => this.setState({
-        TextInput_Clave: TextInputValue
+        TextInput_curso: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_Clave}
+      value={this.state.TextInput_curso}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_cuatrimestre: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_cuatrimestre}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_id_profesor: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_id_profesor}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_id_grado: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_id_grado}
       autoFocus={true}
     ></TextInput>
 
