@@ -1,44 +1,56 @@
 ﻿<?php
-//Vamos a invocar las cabeceras para dar permisos de ejecucíon a los llamados de la API desde cualquier Aplicación
+//Vamos a inovicar las cabeceras para dar permisos
+//de ejecución a los llamados de la API desde cualquier
+//Aplicación.
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Credentials: true");
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');//CRUD
-header('Access-Control-Max-Age: 1000');//
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
+OPTIONS');
+header('Access-Control-Max-Age: 1000');
 
-//Ahora vamos a crear el metodo consultar para listar todos los registros
+header('Access-Control-Allow-Headers: Origin,Content-Type, X-Auth-
+Token,Authorization');
 
-// Importar la conexion (PARAMETROS)
-include '../../Connection/ParametrosDB.php';
+//Ahora vamos a crear el método consultar para listas todos los registros.
+include '../Conexion/ParametrosDB.php';
+//Ahora abramos ls¿a conexión
+$conn = new mysqli($HostName, $HostUser, $HostPass, $DatabaseName);
 
-// Conectar a la base de datos
+$json = file_get_contents('php://input');
+$obj = json_decode($json, true);
 
-$connection = mysqli($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
+$id = $obj['id']
 
-//Ahora validamos si la conexion es correcta o no
+//Ahora validemos si la conexión es correcta o no.
+if ($conn->connect_error)
+{
+die("La conexión no se pudo realizar: ".$conn->connect_error);
+}
+else
+{
+//Ahora vamos a construir la consulta.
+$sql = "SELECT * FROM asignatura WHERE id = '$id'"; //Preparar la consulta
+$result = $conn->query($sql); //Ejecutar la consulta
+//Vamos a verificar si devuelve datos o no.
+if ($result->num_rows > 0)
+{
+//Con los registros encontrados los llevamos
+//a un vector
+while ($row[] = $result->fetch_assoc())
+{
+$item =$row;
+//Ahora vamos a convertir este registro a
+//JSON
 
-if ($connection->connect_error){
-    die("La conexion no se pudo realizar: " .$connection->connect_error);
-}else{
-    //Ahora vamos a construir la consulta
-    $SQL="SELECT * FROM asignatura WHERE id = '$id'";
-    $resultado = $connection->query($SQL);
+$json = json_encode($item);
 
-    //Validar si se devuelven datos
-        if ($resultado->num_rows > 0){
-            //Con los datos encontrados los llevamos a un array
-            while ($row[] = $resultado->fetch_assoc()){
-                //Levamos el dato a una variable
-                $item = $row;
-                //Lo convertimos en JSON
-                $json = json_encode($item,JSON_UNESCAPED_UNICODE); 
-                echo($json);
-            }
-        }else{
-            echo("No se encontraron datos para mostrar");
-        }
-    }
-    mysqli_close($connection);
+}
+}
+else
+{
+echo "No hay registros para mostrar";
+}
+echo $json;
+$conn->close();
+}
 ?>
-
-
