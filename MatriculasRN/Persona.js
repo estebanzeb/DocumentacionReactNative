@@ -27,7 +27,7 @@ export default class Persona extends React.Component{
   Insertar = () => {
     //Ahora vamos a consumir al API: APIMatriculasSabado
     
-    fetch('http://192.168.1.59:8080/React-Native/APIMatriculasSabado/Model/Persona/InsertarPersona.php',
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/InsertarPersona.php',
     {
       method:'POST',
       headers:{
@@ -66,7 +66,7 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',

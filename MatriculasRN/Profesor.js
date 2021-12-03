@@ -143,72 +143,80 @@ render(){
     <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
       Registro de personas</text>
 
-  <TextInput
-  placeholder="Ingrese el ID de la persona"
-  onChangeText={TextInputValue => this.setState({
-    TextInput_id: TextInputValue
-  })}//Se captura el dato
-  underlineColorAndroid='transparent'
-  style={MisEstilos.TextInputStyleClass}
-  value={this.state.TextInput_id}
-  ></TextInput>
+      <TextInput
+      placeholder="Ingrese el tipo de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_tipo: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_tipo}
+      autoFocus={true}
+    ></TextInput>
 
-  <TextInput
-  placeholder="Ingrese el NIF de la persona"
-  onChangeText={TextInputValue => this.setState({
-    TextInput_nif: TextInputValue
-  })}//Se captura el dato
-  underlineColorAndroid='transparent'
-  style={MisEstilos.TextInputStyleClass}
-  value={this.state.TextInput_nif}
-  autoFocus={true}
-  ></TextInput>
+    
+    <TextInput
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_Clave: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_Clave}
+      autoFocus={true}
+    ></TextInput>
 
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
+        <Text style={MisEstilos.TextStyle}>Guardar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Actualizar}>
+        <Text style={MisEstilos.TextStyle}>Actualizar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Borrar}>
+        <Text style={MisEstilos.TextStyle}>Borrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
+        <Text style={MisEstilos.TextStyle}>Buscar</Text>
+      </TouchableOpacity>
 
-  <TouchableOpacity
-  activeOpacity={0.4}
-  style={MisEstilos.TouchableOpacityStyle}
-  onPress={this.Insertar}
-  ></TouchableOpacity>
-
-  </View>
-  );
-}
+      </View>
+    );
+  }
 }
 //-----------------------------------------------------------------------------------
 const MisEstilos = StyleSheet.create({
-MainContainer:{
-  alignItems: 'center',
-  flex: 1,
-  paddingTop: 30,
-  backgroundColor: '#fff'
-},
-TextInputStyleClass:{
-  textAlign: 'center',
-  width: '90%',
-  marginTop:7,
-  height: 40,
-  borderWidth: 1,
-  borderColor: '#ff5722',
-  borderRadius: 5,
-},
-TouchableOpacityStyle:{
-  paddingTop:10,
-  paddingBottom: 10,
-  borderRadius: 5,
-  marginBottom:50,
-  width:'90%',
-  backgroundColor: '#08BCD4'
-},
-TextStyle:{
-  color:'fff',
-  textAlign: 'center',
-},
-rowViewContainer:{
-  fontSize: 20,
-  paddingRight: 10,
-  paddingTop: 10,
-  paddingLeft: 10,
-  paddingBottom: 10,
-}
+  MainContainer:{
+    alignItems: 'center',
+    flex: 1,
+    paddingTop: 30,
+    backgroundColor: '#fff'
+  },
+  TextInputStyleClass:{
+    textAlign: 'center',
+    width: '90%',
+    marginTop:7,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ff5722',
+    borderRadius: 5,
+  },
+  TouchableOpacityStyle:{
+    paddingTop:10,
+    paddingBottom: 10,
+    borderRadius: 5,
+    marginBottom:50,
+    width:'90%',
+    backgroundColor: '#08BCD4'
+  },
+  TextStyle:{
+    color:'fff',
+    textAlign: 'center',
+  },
+  rowViewContainer:{
+    fontSize: 20,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingBottom: 10,
+  }
 });

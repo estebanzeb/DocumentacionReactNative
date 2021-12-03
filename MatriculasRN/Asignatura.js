@@ -9,24 +9,20 @@ export default class Persona extends React.Component{
     //Ahora definimos las varibales para la tabla persona de la Base de Datos de matriculagruposabado
     this.state = {
       TextInput_id:'',
-      TextInput_nif:'',
       TextInput_nombre:'',
-      TextInput_apellido1:'',
-      TextInput_apellido2:'',
-      TextInput_ciudad:'',
-      TextInput_direccion:'',
-      TextInput_telefono:'',
-      TextInput_fecha_nacimiento:'',
-      TextInput_sexo:'',
+      TextInput_creditos:'',
       TextInput_tipo:'',
-      TextInput_Clave:''
+      TextInput_curso:'',
+      TextInput_cuatrimestre:'',
+      TextInput_id_profesor:'',
+      TextInput_id_grado:'',
     }  
   }
 //-----------------------------------------------------------------------------------
   //Ahora creamos las funciones de esta clase
   Insertar = () => {
     //Ahora vamos a consumir al API: APIMatriculasSabado
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/InsertarPersona.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/InsertarAsignatura.php',{
       method:'POST',
       headers:{
         'Accept': 'aaplication/json',
@@ -34,18 +30,14 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          persona_id: this.state.TextInput_id,
-          persona_nif: this.state.TextInput_nif,
-          persona_nombre: this.state.TextInput_nombre,
-          persona_apellido1: this.state.TextInput_apellido1,
-          persona_apellido2: this.state.TextInput_apellido2,
-          persona_ciudad: this.state.TextInput_ciudad,
-          persona_direccion: this.state.TextInput_direccion,
-          persona_telefono: this.state.TextInput_telefono,
-          persona_fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          persona_sexo: this.state.TextInput_sexo,
-          persona_tipo: this.state.TextInput_tipo,
-          persona_Clave: this.state.TextInput_Clave
+          //asignatura_id: this.state.TextInput_id,
+          asignatura_nombre: this.state.TextInput_nombre,
+          asignatura_creditos: this.state.TextInput_creditos,
+          asignatura_tipo: this.state.TextInput_tipo,
+          asignatura_curso: this.state.TextInput_curso,
+          asignatura_cuatrimestre: this.state.TextInput_cuatrimestre,
+          asignatura_id_profesor: this.state.TextInput_id_profesor,
+          asignatura_id_grado: this.state.TextInput_TextInput_id_grado
         }
       )
     }).then((response) => response.json())
@@ -64,25 +56,20 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
+    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/ActualizarAsignatura.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          persona_id: this.state.TextInput_id,
-          persona_nif: this.state.TextInput_nif,
-          persona_nombre: this.state.TextInput_nombre,
-          persona_apellido1: this.state.TextInput_apellido1,
-          persona_apellido2: this.state.TextInput_apellido2,
-          persona_ciudad: this.state.TextInput_ciudad,
-          persona_direccion: this.state.TextInput_direccion,
-          persona_telefono: this.state.TextInput_telefono,
-          persona_fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          persona_sexo: this.state.TextInput_sexo,
-          persona_tipo: this.state.TextInput_tipo,
-          persona_Clave: this.state.TextInput_Clave
+        asignatura_nombre: this.state.TextInput_nombre,
+        asignatura_creditos: this.state.TextInput_creditos,
+        asignatura_tipo: this.state.TextInput_tipo,
+        asignatura_curso: this.state.TextInput_curso,
+        asignatura_cuatrimestre: this.state.TextInput_cuatrimestre,
+        asignatura_id_profesor: this.state.TextInput_id_profesor,
+        asignatura_id_grado: this.state.TextInput_TextInput_id_grado
       })
     }).then((response) => response.json())
 
@@ -98,7 +85,7 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   Borrar = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/EliminarPersona.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/EliminarAsignatura.php',{
       method:'DELETE',
       headers:{
         'Accept': 'aaplication/json',
@@ -106,7 +93,7 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          persona_id: this.state.TextInput_id
+          asignatura_id: this.state.TextInput_id
         }
       )
     }).then((response) => response.json())
@@ -123,7 +110,7 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/ListarTodasLasPersonas.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/ListarTodasLasAsignaturas.php',{
       method:'GET',
       headers:{
         'Accept': 'aaplication/json',
@@ -131,38 +118,33 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          persona_id: this.state.TextInput_id,
-          persona_nif: this.state.TextInput_nif,
-          persona_nombre: this.state.TextInput_nombre,
-          persona_apellido1: this.state.TextInput_apellido1,
-          persona_apellido2: this.state.TextInput_apellido2,
-          persona_ciudad: this.state.TextInput_ciudad,
-          persona_direccion: this.state.TextInput_direccion,
-          persona_telefono: this.state.TextInput_telefono,
-          persona_fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          persona_sexo: this.state.TextInput_sexo,
-          persona_tipo: this.state.TextInput_tipo
+          asignatura_id: this.state.TextInput_id,
+          asignatura_nombre: this.state.TextInput_nombre,
+          asignatura_creditos: this.state.TextInput_creditos,
+          asignatura_tipo: this.state.TextInput_tipo,
+          asignatura_curso: this.state.TextInput_curso,
+          asignatura_cuatrimestre: this.state.TextInput_cuatrimestre,
+          asignatura_id_profesor: this.state.TextInput_id_profesor,
+          asignatura_id_grado: this.state.TextInput_TextInput_id_grado
         }
       )
     }).then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        TextInput_nif: responseJson[0]['nif'],
+        TextInput_id: responseJson[0]['id'],
         TextInput_nombre: responseJson[0]['nombre'],
-        TextInput_apellido1: responseJson[0]['apellido1'],
-        TextInput_apellido2: responseJson[0]['apellido2'],
-        TextInput_ciudad: responseJson[0]['ciudad'],
-        TextInput_direccion: responseJson[0]['direccion'],
-        TextInput_telefono: responseJson[0]['telefono'],
-        TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-        TextInput_sexo: responseJson[0]['sexo'],
-        TextInput_tipo: responseJson[0]['tipo']
+        TextInput_creditos: responseJson[0]['creditos'],
+        TextInput_tipo: responseJson[0]['tipo'],
+        TextInput_curso: responseJson[0]['curso'],
+        TextInput_cuatrimestre: responseJson[0]['cuatrimestre'],
+        TextInput_id_profesor: responseJson[0]['id_profesor'],
+        TextInput_id_grado: responseJson[0]['id_grado']
       })
     })
   }
 //-----------------------------------------------------------------------------------
   Listar = () => {
-      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarLaPersona.php',{
+      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarAsignatura.php',{
         method:'GET',
         headers:{
           'Accept': 'aaplication/json',
@@ -170,72 +152,75 @@ export default class Persona extends React.Component{
         },
         body: JSON.stringify(
           {
-            persona_id: this.state.TextInput_id,
-            persona_nif: this.state.TextInput_nif,
-            persona_nombre: this.state.TextInput_nombre,
-            persona_apellido1: this.state.TextInput_apellido1,
-            persona_apellido2: this.state.TextInput_apellido2,
-            persona_ciudad: this.state.TextInput_ciudad,
-            persona_direccion: this.state.TextInput_direccion,
-            persona_telefono: this.state.TextInput_telefono,
-            persona_fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-            persona_sexo: this.state.TextInput_sexo,
-            persona_tipo: this.state.TextInput_tipo
+            asignatura_id: this.state.TextInput_id,
+            asignatura_nombre: this.state.TextInput_nombre,
+            asignatura_creditos: this.state.TextInput_creditos,
+            asignatura_tipo: this.state.TextInput_tipo,
+            asignatura_curso: this.state.TextInput_curso,
+            asignatura_cuatrimestre: this.state.TextInput_cuatrimestre,
+            asignatura_id_profesor: this.state.TextInput_id_profesor,
+            asignatura_id_grado: this.state.TextInput_TextInput_id_grado
           }
         )
       }).then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          TextInput_nif: responseJson[0]['nif'],
+          TextInput_id: responseJson[0]['id'],
           TextInput_nombre: responseJson[0]['nombre'],
-          TextInput_apellido1: responseJson[0]['apellido1'],
-          TextInput_apellido2: responseJson[0]['apellido2'],
-          TextInput_ciudad: responseJson[0]['ciudad'],
-          TextInput_direccion: responseJson[0]['direccion'],
-          TextInput_telefono: responseJson[0]['telefono'],
-          TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-          TextInput_sexo: responseJson[0]['sexo'],
-          TextInput_tipo: responseJson[0]['tipo']
+          TextInput_creditos: responseJson[0]['creditos'],
+          TextInput_tipo: responseJson[0]['tipo'],
+          TextInput_curso: responseJson[0]['curso'],
+          TextInput_cuatrimestre: responseJson[0]['cuatrimestre'],
+          TextInput_id_profesor: responseJson[0]['id_profesor'],
+          TextInput_id_grado: responseJson[0]['id_grado']
         })
       })
   }
 //-----------------------------------------------------------------------------------
-  render(){
-    return (
-    <View style={MisEstilos.MainContainer}>
+render(){
+  return (
+  <View style={MisEstilos.MainContainer}>
 
-      <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-        Registro de personas</text>
+    <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
+      Registro de personas</text>
 
-    <TextInput
-    placeholder="Ingrese el ID de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_id: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_id}
+      <TextInput
+      placeholder="Ingrese el tipo de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_tipo: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_tipo}
+      autoFocus={true}
     ></TextInput>
 
+    
     <TextInput
-    placeholder="Ingrese el NIF de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_nif: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_nif}
-    autoFocus={true}
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_Clave: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_Clave}
+      autoFocus={true}
     ></TextInput>
 
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
+        <Text style={MisEstilos.TextStyle}>Guardar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Actualizar}>
+        <Text style={MisEstilos.TextStyle}>Actualizar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Borrar}>
+        <Text style={MisEstilos.TextStyle}>Borrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
+        <Text style={MisEstilos.TextStyle}>Buscar</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity
-    activeOpacity={0.4}
-    style={MisEstilos.TouchableOpacityStyle}
-    onPress={this.Insertar}
-    ></TouchableOpacity>
-
-    </View>
+      </View>
     );
   }
 }

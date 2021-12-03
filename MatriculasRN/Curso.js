@@ -25,7 +25,7 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          curso_id: this.state.TextInput_id,
+          //curso_id: this.state.TextInput_id,
           curso_ano_inicio: this.state.TextInput_ano_inicio,
           curso_ano_fin: this.state.TextInput_ano_fin,
         }
@@ -54,7 +54,7 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          curso_id: this.state.TextInput_id,
+          //curso_id: this.state.TextInput_id,
           curso_ano_inicio: this.state.TextInput_ano_inicio,
           curso_ano_fin: this.state.TextInput_ano_fin,
       })
@@ -97,7 +97,7 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Curso/ListarTodasLasCursos.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Curso/ListarTodosLosCursos.php',{
       method:'GET',
       headers:{
         'Accept': 'aaplication/json',
@@ -113,22 +113,15 @@ export default class Persona extends React.Component{
     }).then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        TextInput_id: responseJson[0]['nif'],
-        TextInput_ano_inicio: responseJson[0]['nombre'],
-        TextInput_ano_fin: responseJson[0]['apellido1'],
-        TextInput_apellido2: responseJson[0]['apellido2'],
-        TextInput_ciudad: responseJson[0]['ciudad'],
-        TextInput_direccion: responseJson[0]['direccion'],
-        TextInput_telefono: responseJson[0]['telefono'],
-        TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-        TextInput_sexo: responseJson[0]['sexo'],
-        TextInput_tipo: responseJson[0]['tipo']
+        TextInput_id: responseJson[0]['id'],
+        TextInput_ano_inicio: responseJson[0]['ano_inicio'],
+        TextInput_ano_fin: responseJson[0]['ano_fin'],
       })
     })
   }
 //-----------------------------------------------------------------------------------
   Listar = () => {
-      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarLaPersona.php',{
+      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarCurso.php',{
         method:'GET',
         headers:{
           'Accept': 'aaplication/json',
@@ -136,72 +129,65 @@ export default class Persona extends React.Component{
         },
         body: JSON.stringify(
           {
-            persona_id: this.state.TextInput_id,
-            persona_nif: this.state.TextInput_nif,
-            persona_nombre: this.state.TextInput_nombre,
-            persona_apellido1: this.state.TextInput_apellido1,
-            persona_apellido2: this.state.TextInput_apellido2,
-            persona_ciudad: this.state.TextInput_ciudad,
-            persona_direccion: this.state.TextInput_direccion,
-            persona_telefono: this.state.TextInput_telefono,
-            persona_fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-            persona_sexo: this.state.TextInput_sexo,
-            persona_tipo: this.state.TextInput_tipo
+            curso_id: this.state.TextInput_id,
+            curso_ano_inicio: this.state.TextInput_ano_inicio,
+            curso_ano_fin: this.state.TextInput_ano_fin,
           }
         )
       }).then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          TextInput_nif: responseJson[0]['nif'],
-          TextInput_nombre: responseJson[0]['nombre'],
-          TextInput_apellido1: responseJson[0]['apellido1'],
-          TextInput_apellido2: responseJson[0]['apellido2'],
-          TextInput_ciudad: responseJson[0]['ciudad'],
-          TextInput_direccion: responseJson[0]['direccion'],
-          TextInput_telefono: responseJson[0]['telefono'],
-          TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-          TextInput_sexo: responseJson[0]['sexo'],
-          TextInput_tipo: responseJson[0]['tipo']
+          TextInput_id: responseJson[0]['id'],
+          TextInput_ano_inicio: responseJson[0]['ano_inicio'],
+          TextInput_ano_fin: responseJson[0]['ano_fin'],
         })
       })
   }
 //-----------------------------------------------------------------------------------
-  render(){
-    return (
-    <View style={MisEstilos.MainContainer}>
+render(){
+  return (
+  <View style={MisEstilos.MainContainer}>
 
-      <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-        Registro de personas</text>
+    <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
+      Registro de personas</text>
 
-    <TextInput
-    placeholder="Ingrese el ID de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_id: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_id}
+      <TextInput
+      placeholder="Ingrese el tipo de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_tipo: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_tipo}
+      autoFocus={true}
     ></TextInput>
 
+    
     <TextInput
-    placeholder="Ingrese el NIF de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_nif: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_nif}
-    autoFocus={true}
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_Clave: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_Clave}
+      autoFocus={true}
     ></TextInput>
 
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
+        <Text style={MisEstilos.TextStyle}>Guardar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Actualizar}>
+        <Text style={MisEstilos.TextStyle}>Actualizar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Borrar}>
+        <Text style={MisEstilos.TextStyle}>Borrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
+        <Text style={MisEstilos.TextStyle}>Buscar</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity
-    activeOpacity={0.4}
-    style={MisEstilos.TouchableOpacityStyle}
-    onPress={this.Insertar}
-    ></TouchableOpacity>
-
-    </View>
+      </View>
     );
   }
 }

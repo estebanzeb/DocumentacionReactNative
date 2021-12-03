@@ -51,7 +51,7 @@ export default class Persona extends React.Component{
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          grado_id: this.state.TextInput_id,
+          //grado_id: this.state.TextInput_id,
           grado_nombre: this.state.TextInput_nombre,
           
       })
@@ -94,7 +94,7 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/ListarTodasLasGrados.php',{
+    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/ListarTodosLosGrados.php',{
       method:'GET',
       headers:{
         'Accept': 'aaplication/json',
@@ -102,14 +102,14 @@ export default class Persona extends React.Component{
       },
       body: JSON.stringify(
         {
-          grado_id: this.state.TextInput_id,
+          //grado_id: this.state.TextInput_id,
           grado_nombre: this.state.TextInput_nombre,
         }
       )
     }).then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        TextInput_id: responseJson[0]['id'],
+        //TextInput_id: responseJson[0]['id'],
         TextInput_nombre: responseJson[0]['nombre'],
       })
     })
@@ -124,55 +124,63 @@ export default class Persona extends React.Component{
         },
         body: JSON.stringify(
           {
-            grado_id: this.state.TextInput_id,
+            //grado_id: this.state.TextInput_id,
             grado_nombre: this.state.TextInput_nombre,
           }
         )
       }).then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          TextInput_id: responseJson[0]['id'],
+          //TextInput_id: responseJson[0]['id'],
           TextInput_nombre: responseJson[0]['nombre'],
         })
       })
   }
 //-----------------------------------------------------------------------------------
-  render(){
-    return (
-    <View style={MisEstilos.MainContainer}>
+render(){
+  return (
+  <View style={MisEstilos.MainContainer}>
 
-      <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-        Registro de personas</text>
+    <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
+      Registro de personas</text>
 
-    <TextInput
-    placeholder="Ingrese el ID de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_id: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_id}
+      <TextInput
+      placeholder="Ingrese el tipo de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_tipo: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_tipo}
+      autoFocus={true}
     ></TextInput>
 
+    
     <TextInput
-    placeholder="Ingrese el NIF de la persona"
-    onChangeText={TextInputValue => this.setState({
-      TextInput_nif: TextInputValue
-    })}//Se captura el dato
-    underlineColorAndroid='transparent'
-    style={MisEstilos.TextInputStyleClass}
-    value={this.state.TextInput_nif}
-    autoFocus={true}
+      placeholder="Ingrese la clave de la persona"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_Clave: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_Clave}
+      autoFocus={true}
     ></TextInput>
 
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
+        <Text style={MisEstilos.TextStyle}>Guardar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Actualizar}>
+        <Text style={MisEstilos.TextStyle}>Actualizar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Borrar}>
+        <Text style={MisEstilos.TextStyle}>Borrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
+        <Text style={MisEstilos.TextStyle}>Buscar</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity
-    activeOpacity={0.4}
-    style={MisEstilos.TouchableOpacityStyle}
-    onPress={this.Insertar}
-    ></TouchableOpacity>
-
-    </View>
+      </View>
     );
   }
 }
