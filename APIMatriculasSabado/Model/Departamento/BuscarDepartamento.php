@@ -19,7 +19,7 @@ $conn = new mysqli($HostName, $HostUser, $HostPass, $DatabaseName);
 $json = file_get_contents('php://input');
 $obj = json_decode($json, true);
 
-$id = $obj['id']
+$id = $obj['id'];
 
 //Ahora validemos si la conexión es correcta o no.
 if ($conn->connect_error)

@@ -18,8 +18,8 @@ Token , Authorization');
 include '../Conexion/ParametrosDB.php';
 
 //Vamos a abrir la conexión.
-$conn = mysqli_connect ($HostName, $HostUser, $HostPass,
-$DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
+
 //Ahora validemos si la conexión es correcta o no.
 $json = file_get_contents('php://input');
 

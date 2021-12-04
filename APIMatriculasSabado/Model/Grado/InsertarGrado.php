@@ -32,7 +32,7 @@ $nombre = $obj['nombre'];
 
 //Ahora agreguemos la instrucción SQL para insertar
 $SQL="INSERT INTO grado (nombre) VALUES ('$nombre')";
-";
+
 //Ahora vamos a ejecutar la instrucción SQL anterior
 if(mysqli_query($conn,$sql_query))
 {

@@ -1,6 +1,6 @@
 <?php
 $HostName ='localhost';
-$DBUser ='root';
-$DBpass ='';
-$DBname ='matriculagruposabado';
+$HostUser ='root';
+$HostPass ='';
+$DatabaseName ='matriculagruposabado';
 ?>

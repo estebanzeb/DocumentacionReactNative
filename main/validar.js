@@ -31,7 +31,6 @@ export default class ValidarNumeros extends Component{
                         underlineColorAndroid='transparent'
                         style={MisEstilos.ClaseEstilosTextInput}
                     />
-                    
             </View> 
             );
         }

@@ -35,7 +35,7 @@ if ($connection->connect_error){
         $id_grado = $obj['id_grado'];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="INSERT INTO persona (nombre, creditos, tipo, curso, cuatrimestre, id_profesor, id_grado) VALUES ('$nombre', '$creditos', '$tipo', '$curso', '$cuatrimestre', '$id_profesor', '$id_grado')";
+        $SQL="INSERT INTO asignatura (nombre, creditos, tipo, curso, cuatrimestre, id_profesor, id_grado) VALUES ('$nombre', '$creditos', '$tipo', '$curso', '$cuatrimestre', '$id_profesor', '$id_grado')";
             
         //Ahora vamos a ejecutar la instruccion SQL anterior
         if(mysqli_query($connection,$SQL)){

@@ -7,19 +7,17 @@
 //Aplicación.
 header ('Access-Control-Allow-Origin: *');
 header ("Access-Control-Allow-Credentials: true");
-header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header ('Access-Control-Max-Age: 1000');
 
-header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
+header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
 //Ahora vamos a crear el método consultar para listas todos los registros.
-include '../Conexion/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
 //Vamos a abrir la conexión.
-$conn = mysqli_connect ($HostName, $HostUser, $HostPass,
-$DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
+
 //Ahora validemos si la conexión es correcta o no.
 $json = file_get_contents('php://input');
 
@@ -42,23 +40,18 @@ $tipo = $obj['tipo'];
 $Clave = $obj['Clave'];
 
 //Ahora agreguemos la instrucción SQL para insertar
-$sql_query = "insert into persona(
-nif, nombre, apellido1, apellido2, ciudad,
-direccion, telefono, fecha_nacimiento, sexo,  tipo,Clave,)
-values('$nif', '$nombre', '$apellido1', '$apellido2',
-'$ciudad',  '$direccion', '$telefono', '$fecha_nacimiento',
-'$sexo', '$tipo' ,'$Clave')
-";
+$SQL = "INSERT INTO persona (nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, fecha_nacimiento, sexo, tipo, Clave) VALUES ('$nif','$nombre', '$apellido1', '$apellido2', '$ciudad', '$direccion', '$telefono', '$fecha_nacimiento', '$sexo', '$tipo', '$Clave')"; 
+
 //Ahora vamos a ejecutar la instrucción SQL anterior
-if(mysqli_query($conn,$sql_query))
+if(mysqli_query($conn,$SQL))
 {
-$Mensaje = "GRABADO";
-$json = json_encode($Mensaje);
-echo $json;
+    $Mensaje = "GRABADO";
+    $json = json_encode($Mensaje);
+    echo $json;
 }
 else
 {
-echo "ERROR";
+echo "No esta dando";
 }
 //Cerremos la conexión
 mysqli_close($conn);

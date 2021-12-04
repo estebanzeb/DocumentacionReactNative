@@ -31,7 +31,7 @@ $obj = json_decode($json, true);
 
 //Vamos a crear las variables para enviar los datos de los campos de la
 //tabla de la siguiente manera:
-
+$id = $obj['id'];
 $nif = $obj['nif'];
 $nombre = $obj['nombre'];
 $apellido1 = $obj['apellido1'];
@@ -44,8 +44,8 @@ $sexo = $obj['sexo'];
 $tipo = $obj['tipo'];
 $Clave = $obj['Clave'];
 //Ahora agreguemos la instrucción SQL para actualizar
-$Sql_Query = "UPDATE persona SET
-nif= '$nif',
+$SQL = "UPDATE persona SET
+nif = '$nif',
 nombre = '$nombre',
 apellido1 = '$apellido1',
 apellido2 = '$apellido2',
@@ -60,7 +60,7 @@ WHERE id = $id";
 
 //Ahora vamos a ejecutar la instrucción SQL anterior
 
-if(mysqli_query($conn, $Sql_Query))
+if(mysqli_query($conn, $SQL))
 {
 $Mensaje = "ACTUALIZADO";
 $json = json_encode($Mensaje);
