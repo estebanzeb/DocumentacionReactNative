@@ -7,19 +7,17 @@
 //Aplicación.
 header ('Access-Control-Allow-Origin: *');
 header ("Access-Control-Allow-Credentials: true");
-header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header ('Access-Control-Max-Age: 1000');
 
-header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
+header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
-//Ahora vamos a crear el método consultar para listas todos los registros.
-include '../Conexion/ParametrosDB.php';
+//Ahora vamos a crear el método actualizar para modificar todos loscampos.
+include '../../Connection/ParametrosDB.php';
 
 //Vamos a abrir la conexión.
-$conn = mysqli_connect ($HostName, $HostUser, $HostPass,
-$DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
+
 //Ahora validemos si la conexión es correcta o no.
 $json = file_get_contents('php://input');
 
@@ -35,7 +33,7 @@ $ano_fin = $obj['ano_fin'];
 $SQL="INSERT INTO curso_escolar (ano_inicio, ano_fin) VALUES ('$ano_inicio', '$ano_fin')";
 
 //Ahora vamos a ejecutar la instrucción SQL anterior
-if(mysqli_query($conn,$sql_query))
+if(mysqli_query($conn,$SQL))
 {
 $Mensaje = "GRABADO";
 $json = json_encode($Mensaje);

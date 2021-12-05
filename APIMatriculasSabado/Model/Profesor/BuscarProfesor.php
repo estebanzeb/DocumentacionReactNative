@@ -4,17 +4,16 @@
 //Aplicación.
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header('Access-Control-Max-Age: 1000');
 
-header('Access-Control-Allow-Headers: Origin,Content-Type, X-Auth-
-Token,Authorization');
+header('Access-Control-Allow-Headers: Origin,Content-Type, X-Auth-Token,Authorization');
 
 //Ahora vamos a crear el método consultar para listas todos los registros.
-include '../Conexion/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
+
 //Ahora abramos ls¿a conexión
-$conn = new mysqli($HostName, $HostUser, $HostPass, $DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
 
 $json = file_get_contents('php://input');
 $obj = json_decode($json, true);

@@ -8,20 +8,16 @@
 //Aplicación.
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header('Access-Control-Max-Age: 1000');
 
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
-//Ahora vamos a crear el método actualizar para modificar todos los
-campos.
-include '../Conexion/ParametrosDB.php';
+//Ahora vamos a crear el método actualizar para modificar todos loscampos.
+include '../../Connection/ParametrosDB.php';
 
 //Vamos a abrir la conexión.
-$conn = mysqli_connect($HostName, $HostUser, $HostPass,
-$DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
 
 //Ahora validemos si la conexión es correcta o no.
 $json = file_get_contents('php://input');
@@ -43,23 +39,11 @@ $fecha_nacimiento = $obj['fecha_nacimiento'];
 $sexo = $obj['sexo'];
 $tipo = $obj['tipo'];
 $Clave = $obj['Clave'];
+
 //Ahora agreguemos la instrucción SQL para actualizar
-$SQL = "UPDATE persona SET
-nif = '$nif',
-nombre = '$nombre',
-apellido1 = '$apellido1',
-apellido2 = '$apellido2',
-ciudad = '$ciudad',
-direccion = '$direccion',
-telefono = '$telefono',
-fecha_nacimiento = '$fecha_nacimiento',
-sexo = '$sexo',
-tipo = '$tipo'
-Clave = '$Clave',
-WHERE id = $id";
+$SQL = "UPDATE persona SET nif = '$nif', nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', ciudad = '$ciudad', direccion = '$direccion', telefono = '$telefono', fecha_nacimiento = '$fecha_nacimiento', sexo = '$sexo', tipo = '$tipo' Clave = '$Clave' WHERE id = $id";
 
 //Ahora vamos a ejecutar la instrucción SQL anterior
-
 if(mysqli_query($conn, $SQL))
 {
 $Mensaje = "ACTUALIZADO";

@@ -7,17 +7,15 @@
 //Aplicación.
 header ('Access-Control-Allow-Origin: *');
 header ("Access-Control-Allow-Credentials: true");
-header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header ('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header ('Access-Control-Max-Age: 1000');
 
-header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
+header ('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
 //Ahora vamos a crear el método consultar para listas todos los registros.
-include '../Conexion/ParametrosDB.php';
+include '../../Connection/ParametrosDB.php';
 
-//Vamos a abrir la conexión.
+//Ahora abramos ls¿a conexión
 $conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
 
 //Ahora validemos si la conexión es correcta o no.
@@ -36,7 +34,7 @@ $id_departamento = $obj['id_departamento'];
 $SQL="INSERT INTO profesor (id_profesor, id_departamento) VALUES ('$id_profesor', '$id_departamento')";
 
 //Ahora vamos a ejecutar la instrucción SQL anterior
-if(mysqli_query($conn,$sql_query))
+if(mysqli_query($conn,$SQL))
 {
 $Mensaje = "GRABADO";
 $json = json_encode($Mensaje);

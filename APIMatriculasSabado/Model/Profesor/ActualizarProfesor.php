@@ -10,15 +10,15 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 
 //Ahora vamos a crear el metodo consultar para listar todos los registros
 
-// Importar la conexion (PARAMETROS)
+//Ahora vamos a crear el método consultar para listas todos los registros.
 include '../../Connection/ParametrosDB.php';
 
-// Conectar a la base de datos
-$connection = mysqli_connect($HostName,$DBUser,$DBpass,$DBname);//El orden correcto
+//Ahora abramos ls¿a conexión
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
 
-if ($connection->connect_error){
+if ($conn->connect_error){
 
-    die("La conexion no se pudo realizar: " .$connection->connect_error);
+    die("La conexion no se pudo realizar: " .$conn->connect_error);
 
     }else{
             
@@ -26,15 +26,15 @@ if ($connection->connect_error){
         $obj = json_decode($json,true);
 
         //var_dump ($json);
-        $id_profesor= $obj['id_profesor'];
+        $id_profesor = $obj['id_profesor'];
         $id_departamento  = $obj['id_departamento '];
 
         // Instrucción SQL para agregar el estudiante.
-        $SQL="UPDATE profesor SET id_profesor='$id_profesor', id_departamento ='$id_departamento' WHERE id= $id";
+        $SQL="UPDATE profesor SET id_profesor='$id_profesor', id_departamento ='$id_departamento' WHERE id_profesor= $id_profesor";
         
         //echo ("$SQL");     
         //Ahora vamos a ejecutar la instruccion SQL anterior
-        if(mysqli_query($connection,$SQL)){
+        if(mysqli_query($conn,$SQL)){
 
             $Mensaje = "Actualizado";
             //$Mensaje = "La persona fue registrada correctamente";
@@ -44,58 +44,6 @@ if ($connection->connect_error){
             echo ("Error");
         }
     }
-    mysqli_close($connection);
+    mysqli_close($conn);
 ?>
 
-<?php
-//Vamos a crear las instrucciones de código para grabar datos en
-//la tabla persona.
-
-//Vamos a inovicar las cabeceras para dar permisos
-//de ejecución a los llamados de la API desde cualquier
-
-//Aplicación.
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Credentials: true");
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
-header('Access-Control-Max-Age: 1000');
-
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
-
-//Ahora vamos a crear el método actualizar para modificar todos los
-campos.
-include '../Conexion/ParametrosDB.php';
-
-//Vamos a abrir la conexión.
-$conn = mysqli_connect($HostName, $HostUser, $HostPass,
-$DatabaseName);
-//Ahora validemos si la conexión es correcta o no.
-$json = file_get_contents('php://input');
-
-////Decodificando los datos formato JSON en la variable $obj
-$obj = json_decode($json, true);
-
-//Vamos a crear las variables para enviar los datos de los campos de la
-//tabla de la siguiente manera:
-
-$id_profesor= $obj['id_profesor'];
-$id_departamento  = $obj['id_departamento '];
-//Ahora agreguemos la instrucción SQL para actualizar
-$SQL="UPDATE profesor SET id_profesor='$id_profesor', id_departamento ='$id_departamento' WHERE id= $id";
-//Ahora vamos a ejecutar la instrucción SQL anterior
-
-if(mysqli_query($conn, $Sql_Query))
-{
-$Mensaje = "ACTUALIZADO";
-$json = json_encode($Mensaje);
-echo $json;
-}
-else
-{
-echo "ERROR";
-}
-//Cerremos la conexión
-mysqli_close($conn);
-?>

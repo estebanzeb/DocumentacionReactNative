@@ -8,20 +8,16 @@
 //Aplicación.
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,
-OPTIONS');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE,OPTIONS');
 header('Access-Control-Max-Age: 1000');
 
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-
-Token , Authorization');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
-//Ahora vamos a crear el método actualizar para modificar todos los
-campos.
-include '../Conexion/ParametrosDB.php';
+//Ahora vamos a crear el método actualizar para modificar todos loscampos.
+include '../../Connection/ParametrosDB.php';
 
 //Vamos a abrir la conexión.
-$conn = mysqli_connect($HostName, $HostUser, $HostPass,
-$DatabaseName);
+$conn = new mysqli($HostName,  $HostUser, $HostPass, $DatabaseName);
 
 //Ahora validemos si la conexión es correcta o no.
 $json = file_get_contents('php://input');
@@ -41,7 +37,7 @@ $SQL="UPDATE curso_escolar SET ano_inicio='$ano_inicio', ano_fin='$ano_fin' WHER
 
 //Ahora vamos a ejecutar la instrucción SQL anterior
 
-if(mysqli_query($conn, $Sql_Query))
+if(mysqli_query($conn, $SQL))
 {
 $Mensaje = "ACTUALIZADO";
 $json = json_encode($Mensaje);

@@ -23,8 +23,8 @@ die("La conexión no se pudo realizar: ".$conn->connect_error);
 else
 {
 //Ahora vamos a construir la consulta.
-$sql = "SELECT * FROM persona"; //Preparar la consulta
-$result = $conn->query($sql); //Ejecutar la consulta
+$SQL = "SELECT * FROM persona"; //Preparar la consulta
+$result = $conn->query($SQL); //Ejecutar la consulta
 //Vamos a verificar si devuelve datos o no.
 if ($result->num_rows > 0)
 {
