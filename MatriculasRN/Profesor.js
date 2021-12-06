@@ -141,7 +141,7 @@ render(){
   <View style={MisEstilos.MainContainer}>
 
     <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-      Registro de personas</text>
+      Registro de profesor</text>
 
       <TextInput
       placeholder="Ingrese el tipo de la persona"
