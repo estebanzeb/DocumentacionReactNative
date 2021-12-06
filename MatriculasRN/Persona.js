@@ -220,7 +220,6 @@ export default class Persona extends React.Component{
     <TextInput  
       placeholder="Ingrese el NIF de la persona"
       onChangeText={TextInputValue =>{
-
         if (/^\d+$/.test(TextInputValue))
         {
           this.setState({
@@ -242,10 +241,23 @@ export default class Persona extends React.Component{
       
     <TextInput
       placeholder="Ingrese el nombre de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_nombre: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if (/[a-zA-Z ]+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_nombre: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_nombre: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
+      keyboardType="email-address"
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_nombre}
       autoFocus={true}
@@ -301,6 +313,7 @@ export default class Persona extends React.Component{
         TextInput_telefono: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
+      keyboardType="number-pad"
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_telefono}
       autoFocus={true}
