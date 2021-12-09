@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Alert, TextInput, TouchableOpacity} from 'react-native';
+import { Alert,StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList} from 'react-native';
 
 export default class Persona extends React.Component{
   constructor(props){
@@ -19,16 +19,58 @@ export default class Persona extends React.Component{
       TextInput_fecha_nacimiento:'',
       TextInput_sexo:'',
       TextInput_tipo:'',
-      TextInput_Clave:''
+      TextInput_Clave:'',
+      dataSource:[]
     }  
   }
+
+  cleanInputs(){
+    this.setState({
+      TextInput_id:'',
+      TextInput_nif:'',
+      TextInput_nombre:'',
+      TextInput_apellido1:'',
+      TextInput_apellido2:'',
+      TextInput_ciudad:'',
+      TextInput_direccion:'',
+      TextInput_telefono:'',
+      TextInput_fecha_nacimiento:'',
+      TextInput_sexo:'',
+      TextInput_tipo:'',
+      TextInput_Clave:'',
+    })
+  }
+
+//-----------------------------------------------------------------------------------
+  ListarTodas  = () =>  {
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/ListarTodasLasPersonas.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })
+  }
+
+  componentDidMount  = () =>  {
+    /*fetch('http://localhost:8080/apireactnativeacademic/ShowAllStudentsList.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })*/
+    this.ListarTodas();
+  }
+
+
 //-----------------------------------------------------------------------------------
   //Ahora creamos las funciones de esta clase
   Insertar = () => {
   
 
     //Ahora vamos a consumir al API: APIMatriculasSabado
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/InsertarPersona.php',
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/InsertarPersona.php',
     {
         method: 'POST',
         headers:
@@ -51,10 +93,10 @@ export default class Persona extends React.Component{
           tipo: this.state.TextInput_tipo,
           Clave: this.state.TextInput_Clave,
         }
-
       )
     }).then((response) => response.json()).then((responseJson) =>{
       alert('El resgistro ha sido guardado: ' + responseJson)
+      this.cleanInputs()  
     }).catch((error) => {
       console.error(error);
     });
@@ -77,7 +119,7 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -95,14 +137,13 @@ export default class Persona extends React.Component{
           fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
           sexo: this.state.TextInput_sexo,
           tipo: this.state.TextInput_tipo,
-          Clave: this.state.TextInput_Clave,
       })
     }).then((response) => response.json())
 
       .then((responseJson) =>{
 
         alert('El resgistro ha sido actualizado: ' + responseJson);
-
+        this.cleanInputs()  
       }).catch((error) => {
 
         console.error(error);
@@ -111,12 +152,12 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   Borrar = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/EliminarPersona.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/EliminarPersona.php',{
       method:'DELETE',
-      headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
-      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
       body: JSON.stringify(
         {
           id: this.state.TextInput_id
@@ -127,62 +168,26 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
       alert('El resgistro ha sido borrado: ' +responseJson);
-
+      this.cleanInputs()  
     }).catch((error) => {
 
       console.error(error);
-
     });
   }
 //-----------------------------------------------------------------------------------
-  ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/ListarTodasLasPersonas.php',{
-      method:'GET',
-      headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
-      },
-      body: JSON.stringify(
-        {
-          id: this.state.TextInput_id,
-          nif: this.state.TextInput_nif,
-          nombre: this.state.TextInput_nombre,
-          apellido1: this.state.TextInput_apellido1,
-          apellido2: this.state.TextInput_apellido2,
-          ciudad: this.state.TextInput_ciudad,
-          direccion: this.state.TextInput_direccion,
-          telefono: this.state.TextInput_telefono,
-          fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          sexo: this.state.TextInput_sexo,
-          tipo: this.state.TextInput_tipo
-        }
-      )
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        TextInput_nif: responseJson[0]['nif'],
-        TextInput_nombre: responseJson[0]['nombre'],
-        TextInput_apellido1: responseJson[0]['apellido1'],
-        TextInput_apellido2: responseJson[0]['apellido2'],
-        TextInput_ciudad: responseJson[0]['ciudad'],
-        TextInput_direccion: responseJson[0]['direccion'],
-        TextInput_telefono: responseJson[0]['telefono'],
-        TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-        TextInput_sexo: responseJson[0]['sexo'],
-        TextInput_tipo: responseJson[0]['tipo']
+
+  Listar =  () => {
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/BuscarPersona.php', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+      body: JSON.stringify({
+        id: this.state.TextInput_id
       })
     })
-  }
-//-----------------------------------------------------------------------------------
-  Listar = () => {
-      fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Persona/BuscarPersona.php',{
-          method: 'GET',
-          body:(
-          {
-            id: this.state.TextInput_id,
-          }
-        )
-      }).then((response) => response.json())
+      .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
           TextInput_nif: responseJson[0]['nif'],
@@ -194,9 +199,13 @@ export default class Persona extends React.Component{
           TextInput_telefono: responseJson[0]['telefono'],
           TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
           TextInput_sexo: responseJson[0]['sexo'],
-          TextInput_tipo: responseJson[0]['tipo']
+          TextInput_tipo: responseJson[0]['tipo'],
+          TextInput_Clave: responseJson[0]['Clave']
         })
-      })
+      }).catch((error) => {
+        alert('No se encuentra el Id');
+        this.cleanInputs()
+      });
   }
 //-----------------------------------------------------------------------------------
   render(){
@@ -219,20 +228,9 @@ export default class Persona extends React.Component{
 
     <TextInput  
       placeholder="Ingrese el NIF de la persona"
-      onChangeText={TextInputValue =>{
-        if (/^\d+$/.test(TextInputValue))
-        {
-          this.setState({
-            TextInput_nif: TextInputValue
-          });
-
-        }else{
-          this.setState({
-            TextInput_nif: ''
-          });
-        }
-      }
-      }//Se captura el dato
+      onChangeText={TextInputValue => this.setState({
+        TextInput_nif: TextInputValue
+      })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_nif}
@@ -243,7 +241,7 @@ export default class Persona extends React.Component{
       placeholder="Ingrese el nombre de la persona"
       onChangeText={TextInputValue =>{
         
-        if (/[a-zA-Z ]+$/.test(TextInputValue))
+        if (/[a-zA-Z]+$/.test(TextInputValue))
         {
           this.setState({
             TextInput_nombre: TextInputValue
@@ -257,7 +255,6 @@ export default class Persona extends React.Component{
       }
     }
       underlineColorAndroid='transparent'
-      keyboardType="email-address"
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_nombre}
       autoFocus={true}
@@ -363,7 +360,7 @@ export default class Persona extends React.Component{
       value={this.state.TextInput_Clave}
       autoFocus={true}
     ></TextInput>
-
+    <View style={MisEstilos.MainContainerTouchableOpacityStyle}>
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
         <Text style={MisEstilos.TextStyle}>Guardar</Text>
       </TouchableOpacity>
@@ -376,6 +373,16 @@ export default class Persona extends React.Component{
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
         <Text style={MisEstilos.TextStyle}>Buscar</Text>
       </TouchableOpacity>
+    </View>  
+      <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => 
+          <TouchableOpacity onPress={() => alert(item.nif +" "+item.nombre +" "+item.apellido1 +" "+item.apellido2 +" "+item.ciudad)}
+          style={MisEstilos.TouchableOpacityStyle2}>
+            <Text>                {item.nombre}               </Text>
+          </TouchableOpacity>
+        }
+      />
 
     </View>
     );
@@ -388,21 +395,37 @@ const MisEstilos = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     backgroundColor: '#fff'
+    
   },
   TextInputStyleClass:{
     textAlign: 'center',
-    width: '90%',
+    width: '50%',
     marginTop:7,
     height: 40,
     borderWidth: 1,
     borderColor: '#ff5722',
     borderRadius: 5,
+    
+  },
+  MainContainerTouchableOpacityStyle:{
+    justifyContent: 'center',
+    paddingTop: 20,
+    flexWrap:1,
+    flexDirection:'row',
   },
   TouchableOpacityStyle:{
     paddingTop:10,
     paddingBottom: 10,
     borderRadius: 5,
-    marginBottom:50,
+    marginBottom:10,
+    width:'90%',
+    backgroundColor: '#08BCD4'
+  },
+  TouchableOpacityStyle2:{
+    paddingTop:10,
+    paddingBottom: 10,
+    borderRadius: 5,
+    marginBottom:18,
     width:'90%',
     backgroundColor: '#08BCD4'
   },
