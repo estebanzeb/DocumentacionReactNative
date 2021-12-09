@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet, Alert, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Alert, TextInput, TouchableOpacity,FlatList} from 'react-native';
 
-export default class Persona extends React.Component{
+export default class Grado extends React.Component{
   constructor(props){
     
     super(props)
@@ -10,22 +10,51 @@ export default class Persona extends React.Component{
     this.state = {
       TextInput_id:'',
       TextInput_nombre:'',
+      dataSource:[]
     }  
+  }
+  cleanInputs(){
+    this.setState({
+      TextInput_id :'',
+      TextInput_nombre :'',
+    })
+
+  }  
+  
+  ListarTodas  = () =>  {
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Grado/ListarTodosLosGrados.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })
+  }
+
+  componentDidMount  = () =>  {
+    /*fetch('http://localhost:8080/apireactnativeacademic/ShowAllStudentsList.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })*/
+    this.ListarTodas();
   }
 //-----------------------------------------------------------------------------------
   //Ahora creamos las funciones de esta clase
   Insertar = () => {
     //Ahora vamos a consumir al API: APIMatriculasSabado
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/InsertarGrado.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Grado/InsertarGrado.php',{
       method:'POST',
       headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
       },
       body: JSON.stringify(
         {
-          grado_id: this.state.TextInput_id,
-          grado_nombre: this.state.TextInput_nombre,
+          //id: this.state.TextInput_id,
+          nombre: this.state.TextInput_nombre,
         }
       )
     }).then((response) => response.json())
@@ -33,7 +62,7 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
       alert('El resgistro ha sido guardado: ' +responseJson);
-
+      this.cleanInputs() 
     }).catch((error) => {
 
       console.error(error);
@@ -44,15 +73,15 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Grado/ActualizarGrado.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Grado/ActualizarGrado.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          //grado_id: this.state.TextInput_id,
-          grado_nombre: this.state.TextInput_nombre,
+          id: this.state.TextInput_id,
+          nombre: this.state.TextInput_nombre,
           
       })
     }).then((response) => response.json())
@@ -60,7 +89,7 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
         alert('El resgistro ha sido actualizado: ' + responseJson);
-
+        this.cleanInputs() 
       }).catch((error) => {
 
         console.error(error);
@@ -69,15 +98,15 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   Borrar = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/EliminarGrado.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Grado/EliminarGrado.php',{
       method:'DELETE',
       headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
       },
       body: JSON.stringify(
         {
-          grado_id: this.state.TextInput_id
+          id: this.state.TextInput_id
         }
       )
     }).then((response) => response.json())
@@ -85,7 +114,7 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
       alert('El resgistro ha sido borrado: ' +responseJson);
-
+      this.cleanInputs() 
     }).catch((error) => {
 
       console.error(error);
@@ -93,80 +122,59 @@ export default class Persona extends React.Component{
     });
   }
 //-----------------------------------------------------------------------------------
-  ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/ListarTodosLosGrados.php',{
-      method:'GET',
-      headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
-      },
-      body: JSON.stringify(
-        {
-          //grado_id: this.state.TextInput_id,
-          grado_nombre: this.state.TextInput_nombre,
-        }
-      )
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        //TextInput_id: responseJson[0]['id'],
-        TextInput_nombre: responseJson[0]['nombre'],
-      })
-    })
-  }
-//-----------------------------------------------------------------------------------
   Listar = () => {
-      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Grado/BuscarGrado.php',{
-        method:'GET',
-        headers:{
-          'Accept': 'aaplication/json',
-          'Content-type': 'aaplication/json'
-        },
-        body: JSON.stringify(
-          {
-            //grado_id: this.state.TextInput_id,
-            grado_nombre: this.state.TextInput_nombre,
-          }
-        )
-      }).then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          //TextInput_id: responseJson[0]['id'],
-          TextInput_nombre: responseJson[0]['nombre'],
+      fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Grado/BuscarGrado.php',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({
+          id: this.state.TextInput_id,
         })
       })
-  }
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            TextInput_id: responseJson[0]['id'],
+            TextInput_nombre: responseJson[0]['nombre'],
+          })
+        }).catch((error) => {
+          alert('No se encuentra el Id');
+          this.cleanInputs()
+        });
+    }
 //-----------------------------------------------------------------------------------
 render(){
   return (
   <View style={MisEstilos.MainContainer}>
 
     <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-      Registro de personas</text>
+      Registro de grado</text>
 
       <TextInput
-      placeholder="Ingrese el tipo de la persona"
+      placeholder="Ingrese el id del grado"
       onChangeText={TextInputValue => this.setState({
-        TextInput_tipo: TextInputValue
+        TextInput_id: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_tipo}
+      value={this.state.TextInput_id}
       autoFocus={true}
     ></TextInput>
 
     
     <TextInput
-      placeholder="Ingrese la clave de la persona"
+      placeholder="Ingrese el nombre del grado"
       onChangeText={TextInputValue => this.setState({
-        TextInput_Clave: TextInputValue
+        TextInput_nombre: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_Clave}
+      value={this.state.TextInput_nombre}
       autoFocus={true}
     ></TextInput>
-
+    <View style={MisEstilos.MainContainerTouchableOpacityStyle}>
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
         <Text style={MisEstilos.TextStyle}>Guardar</Text>
       </TouchableOpacity>
@@ -179,6 +187,17 @@ render(){
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
         <Text style={MisEstilos.TextStyle}>Buscar</Text>
       </TouchableOpacity>
+    </View>  
+
+      <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => 
+          <TouchableOpacity onPress={() => alert(item.id)}
+          style={MisEstilos.TouchableOpacityStyle2}>
+            <Text>                {item.nombre}               </Text>
+          </TouchableOpacity>
+        }
+      />
 
       </View>
     );
@@ -191,21 +210,37 @@ const MisEstilos = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     backgroundColor: '#fff'
+    
   },
   TextInputStyleClass:{
     textAlign: 'center',
-    width: '90%',
+    width: '50%',
     marginTop:7,
     height: 40,
     borderWidth: 1,
     borderColor: '#ff5722',
     borderRadius: 5,
+    
+  },
+  MainContainerTouchableOpacityStyle:{
+    justifyContent: 'center',
+    paddingTop: 20,
+    flexWrap:1,
+    flexDirection:'row',
   },
   TouchableOpacityStyle:{
     paddingTop:10,
     paddingBottom: 10,
     borderRadius: 5,
-    marginBottom:50,
+    marginBottom:10,
+    width:'90%',
+    backgroundColor: '#08BCD4'
+  },
+  TouchableOpacityStyle2:{
+    paddingTop:10,
+    paddingBottom: 10,
+    borderRadius: 5,
+    marginBottom:18,
     width:'90%',
     backgroundColor: '#08BCD4'
   },

@@ -217,9 +217,21 @@ export default class Persona extends React.Component{
 
     <TextInput
       placeholder="Ingrese el ID de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_id: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if ( /^\d+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_id: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_id: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_id}
@@ -262,9 +274,21 @@ export default class Persona extends React.Component{
 
     <TextInput
       placeholder="Ingrese el primer apellido de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_apellido1: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if (/[a-zA-Z]+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_apellido1: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_apellido1: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_apellido1}
@@ -273,9 +297,21 @@ export default class Persona extends React.Component{
 
     <TextInput
       placeholder="Ingrese el segundo apellido de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_apellido2: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if (/[a-zA-Z]+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_apellido2: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_apellido2: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_apellido2}
@@ -284,9 +320,21 @@ export default class Persona extends React.Component{
 
     <TextInput
       placeholder="Ingrese la ciudad de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_ciudad: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if (/[a-zA-Z]+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_ciudad: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_ciudad: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_ciudad}
@@ -306,9 +354,21 @@ export default class Persona extends React.Component{
 
     <TextInput
       placeholder="Ingrese el telefono de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_telefono: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if ( /^\d+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_telefono: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_telefono: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       keyboardType="number-pad"
       style={MisEstilos.TextInputStyleClass}
@@ -352,14 +412,27 @@ export default class Persona extends React.Component{
     
     <TextInput
       placeholder="Ingrese la clave de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_Clave: TextInputValue
-      })}//Se captura el dato
+      onChangeText={TextInputValue =>{
+        
+        if ( /^\d+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_Clave: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_Clave: ''
+          });
+        }
+      }
+    }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
       value={this.state.TextInput_Clave}
       autoFocus={true}
     ></TextInput>
+
     <View style={MisEstilos.MainContainerTouchableOpacityStyle}>
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
         <Text style={MisEstilos.TextStyle}>Guardar</Text>
@@ -374,6 +447,7 @@ export default class Persona extends React.Component{
         <Text style={MisEstilos.TextStyle}>Buscar</Text>
       </TouchableOpacity>
     </View>  
+
       <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => 
@@ -395,7 +469,6 @@ const MisEstilos = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     backgroundColor: '#fff'
-    
   },
   TextInputStyleClass:{
     textAlign: 'center',

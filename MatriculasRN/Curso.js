@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet, Alert, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Alert, TextInput, TouchableOpacity,FlatList} from 'react-native';
 
-export default class Persona extends React.Component{
+export default class Curso extends React.Component{
   constructor(props){
     
     super(props)
@@ -13,21 +13,49 @@ export default class Persona extends React.Component{
       TextInput_ano_fin:'',
     }  
   }
+  cleanInputs(){
+    this.setState({
+      TextInput_id :'',
+      TextInput_ano_inicio :'',
+      TextInput_ano_fin:'',
+    })
+
+  }  
+  
+  ListarTodas  = () =>  {
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Curso/ListarTodosLosCursos.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })
+  }
+
+  componentDidMount  = () =>  {
+    /*fetch('http://localhost:8080/apireactnativeacademic/ShowAllStudentsList.php')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      this.setState({
+        dataSource:responseJson
+      })
+    })*/
+    this.ListarTodas();
+  }
 //-----------------------------------------------------------------------------------
   //Ahora creamos las funciones de esta clase
   Insertar = () => {
     //Ahora vamos a consumir al API: APIMatriculasSabado
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Curso/InsertarCurso.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Curso/InsertarCurso.php',{
       method:'POST',
       headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
       },
       body: JSON.stringify(
         {
-          //curso_id: this.state.TextInput_id,
-          curso_ano_inicio: this.state.TextInput_ano_inicio,
-          curso_ano_fin: this.state.TextInput_ano_fin,
+          ano_inicio: this.state.TextInput_ano_inicio,
+          ano_fin: this.state.TextInput_ano_fin,
         }
       )
     }).then((response) => response.json())
@@ -35,7 +63,7 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
       alert('El resgistro ha sido guardado: ' +responseJson);
-
+      this.cleanInputs() 
     }).catch((error) => {
 
       console.error(error);
@@ -46,24 +74,24 @@ export default class Persona extends React.Component{
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://172.16.6.12:8080/React-Native/APIMatriculasSabado/Model/Curso/ActualizarCurso.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Curso/ActualizarCurso.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(
-        {
-          //curso_id: this.state.TextInput_id,
-          curso_ano_inicio: this.state.TextInput_ano_inicio,
-          curso_ano_fin: this.state.TextInput_ano_fin,
+      body: JSON.stringify({
+          id: this.state.TextInput_id,
+          ano_inicio: this.state.TextInput_ano_inicio,
+          ano_fin: this.state.TextInput_ano_fin,
+          
       })
     }).then((response) => response.json())
 
       .then((responseJson) =>{
 
         alert('El resgistro ha sido actualizado: ' + responseJson);
-
+        this.cleanInputs() 
       }).catch((error) => {
 
         console.error(error);
@@ -72,15 +100,15 @@ export default class Persona extends React.Component{
   }
 //-----------------------------------------------------------------------------------
   Borrar = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Curso/EliminarCurso.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Curso/EliminarCurso.php',{
       method:'DELETE',
       headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
       },
       body: JSON.stringify(
         {
-          curso_id: this.state.TextInput_id
+          id: this.state.TextInput_id
         }
       )
     }).then((response) => response.json())
@@ -88,7 +116,7 @@ export default class Persona extends React.Component{
       .then((responseJson) =>{
 
       alert('El resgistro ha sido borrado: ' +responseJson);
-
+      this.cleanInputs() 
     }).catch((error) => {
 
       console.error(error);
@@ -96,84 +124,72 @@ export default class Persona extends React.Component{
     });
   }
 //-----------------------------------------------------------------------------------
-  ListarTodas = () => {
-    fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Curso/ListarTodosLosCursos.php',{
-      method:'GET',
-      headers:{
-        'Accept': 'aaplication/json',
-        'Content-type': 'aaplication/json'
-      },
-      body: JSON.stringify(
-        {
-          curso_id: this.state.TextInput_id,
-          curso_ano_inicio: this.state.TextInput_ano_inicio,
-          curso_ano_fin: this.state.TextInput_ano_fin,
-        }
-      )
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        TextInput_id: responseJson[0]['id'],
-        TextInput_ano_inicio: responseJson[0]['ano_inicio'],
-        TextInput_ano_fin: responseJson[0]['ano_fin'],
-      })
-    })
-  }
-//-----------------------------------------------------------------------------------
   Listar = () => {
-      fetch('http://172.16.6.12:8088/React-Native/APIMatriculasSabado/Model/Persona/BuscarCurso.php',{
-        method:'GET',
-        headers:{
-          'Accept': 'aaplication/json',
-          'Content-type': 'aaplication/json'
-        },
-        body: JSON.stringify(
-          {
-            curso_id: this.state.TextInput_id,
-            curso_ano_inicio: this.state.TextInput_ano_inicio,
-            curso_ano_fin: this.state.TextInput_ano_fin,
-          }
-        )
-      }).then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          TextInput_id: responseJson[0]['id'],
-          TextInput_ano_inicio: responseJson[0]['ano_inicio'],
-          TextInput_ano_fin: responseJson[0]['ano_fin'],
+      fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Curso/BuscarCurso.php',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({
+          id: this.state.TextInput_id,
         })
       })
-  }
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            TextInput_id: responseJson[0]['id'],
+            TextInput_ano_inicio: responseJson[0]['ano_inicio'],
+            TextInput_ano_fin: responseJson[0]['ano_fin'],
+          })
+        }).catch((error) => {
+          alert('No se encuentra el Id');
+          this.cleanInputs()
+        });
+    }
 //-----------------------------------------------------------------------------------
 render(){
   return (
   <View style={MisEstilos.MainContainer}>
 
     <text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-      Registro de personas</text>
+      Registro de cursos</text>
 
       <TextInput
-      placeholder="Ingrese el tipo de la persona"
+      placeholder="Ingrese el id del grado"
       onChangeText={TextInputValue => this.setState({
-        TextInput_tipo: TextInputValue
+        TextInput_id: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_tipo}
+      value={this.state.TextInput_id}
       autoFocus={true}
     ></TextInput>
 
     
     <TextInput
-      placeholder="Ingrese la clave de la persona"
+      placeholder="Ingrese el nombre del grado"
       onChangeText={TextInputValue => this.setState({
-        TextInput_Clave: TextInputValue
+        TextInput_ano_inicio: TextInputValue
       })}//Se captura el dato
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_Clave}
+      value={this.state.TextInput_ano_inicio}
       autoFocus={true}
     ></TextInput>
 
+    <TextInput
+      placeholder="Ingrese el nombre del grado"
+      onChangeText={TextInputValue => this.setState({
+        TextInput_ano_fin: TextInputValue
+      })}//Se captura el dato
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_ano_fin}
+      autoFocus={true}
+    ></TextInput>
+
+    <View style={MisEstilos.MainContainerTouchableOpacityStyle}>
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Insertar}>
         <Text style={MisEstilos.TextStyle}>Guardar</Text>
       </TouchableOpacity>
@@ -186,6 +202,17 @@ render(){
       <TouchableOpacity activeOpacity={0.4} style={MisEstilos.TouchableOpacityStyle} onPress={this.Listar}>
         <Text style={MisEstilos.TextStyle}>Buscar</Text>
       </TouchableOpacity>
+    </View>  
+
+      <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => 
+          <TouchableOpacity onPress={() => alert(item.id)}
+          style={MisEstilos.TouchableOpacityStyle2}>
+            <Text>                {item.ano_inicio}               </Text>
+          </TouchableOpacity>
+        }
+      />
 
       </View>
     );
@@ -198,21 +225,37 @@ const MisEstilos = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     backgroundColor: '#fff'
+    
   },
   TextInputStyleClass:{
     textAlign: 'center',
-    width: '90%',
+    width: '50%',
     marginTop:7,
     height: 40,
     borderWidth: 1,
     borderColor: '#ff5722',
     borderRadius: 5,
+    
+  },
+  MainContainerTouchableOpacityStyle:{
+    justifyContent: 'center',
+    paddingTop: 20,
+    flexWrap:1,
+    flexDirection:'row',
   },
   TouchableOpacityStyle:{
     paddingTop:10,
     paddingBottom: 10,
     borderRadius: 5,
-    marginBottom:50,
+    marginBottom:10,
+    width:'90%',
+    backgroundColor: '#08BCD4'
+  },
+  TouchableOpacityStyle2:{
+    paddingTop:10,
+    paddingBottom: 10,
+    borderRadius: 5,
+    marginBottom:18,
     width:'90%',
     backgroundColor: '#08BCD4'
   },

@@ -5,7 +5,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import Persona from './MatriculasRN/Persona.js'
 import Profesor from './MatriculasRN/Profesor.js'
-
+import Grado from './MatriculasRN/Grado.js'
+import Departamento from './MatriculasRN/Departamento.js'
+import Curso from './MatriculasRN/Curso.js'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -19,9 +21,12 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer ref={n}>
-        <this.Drawer.Navigator initialRouteName="Persona" >
-        <this.Drawer.Screen name="Persona"  component={Persona} />
+        <this.Drawer.Navigator initialRouteName="Curso" >
+          <this.Drawer.Screen name="Persona"  component={Persona} />
           <this.Drawer.Screen name="Profesor"  component={Profesor} />
+          <this.Drawer.Screen name="Grado"  component={Grado} />
+          <this.Drawer.Screen name="Departamento"  component={Departamento} />
+          <this.Drawer.Screen name="Curso"  component={Curso} />
         </this.Drawer.Navigator>
       </NavigationContainer>    
       )
