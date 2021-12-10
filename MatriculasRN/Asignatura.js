@@ -30,14 +30,12 @@ export default class Asignatura extends React.Component{
       TextInput_cuatrimestre:'',
       TextInput_id_profesor:'',
       TextInput_id_grado:'',
-      TextInput_fecha_nacimiento:'',
-
     })
   }
 
 //-----------------------------------------------------------------------------------
   ListarTodas  = () =>  {
-    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/ListarTodasLasPersonas.php')
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Asignatura/ListarTodasLasAsignaturas.php')
     .then((response) => response.json())
     .then((responseJson)=>{
       this.setState({
@@ -64,7 +62,7 @@ export default class Asignatura extends React.Component{
   
 
     //Ahora vamos a consumir al API: APIMatriculasSabado
-    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/InsertarPersona.php',
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Asignatura/InsertarAsignatura.php',
     {
         method: 'POST',
         headers:
@@ -75,17 +73,14 @@ export default class Asignatura extends React.Component{
         body: JSON.stringify(
         {
           id: this.state.TextInput_id,
-          nif: this.state.TextInput_nif,
           nombre: this.state.TextInput_nombre,
-          apellido1: this.state.TextInput_apellido1,
-          apellido2: this.state.TextInput_apellido2,
-          ciudad: this.state.TextInput_ciudad,
-          direccion: this.state.TextInput_direccion,
-          telefono: this.state.TextInput_telefono,
-          fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          sexo: this.state.TextInput_sexo,
+          creditos: this.state.TextInput_creditos,
           tipo: this.state.TextInput_tipo,
-          Clave: this.state.TextInput_Clave,
+          curso: this.state.TextInput_curso,
+          cuatrimestre: this.state.TextInput_cuatrimestre,
+          id_profesor: this.state.TextInput_id_profesor,
+          id_grado: this.state.TextInput_id_grado,
+
         }
       )
     }).then((response) => response.json()).then((responseJson) =>{
@@ -94,44 +89,29 @@ export default class Asignatura extends React.Component{
     }).catch((error) => {
       console.error(error);
     });
-    // console.log({
-    //   //id: this.state.TextInput_id,
-    //   nif: this.state.TextInput_nif,
-    //   nombre: this.state.TextInput_nombre,
-    //   apellido1: this.state.TextInput_apellido1,
-    //   apellido2: this.state.TextInput_apellido2,
-    //   ciudad: this.state.TextInput_ciudad,
-    //   direccion: this.state.TextInput_direccion,
-    //   telefono: this.state.TextInput_telefono,
-    //   fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-    //   sexo: this.state.TextInput_sexo,
-    //   tipo: this.state.TextInput_tipo,
-    //   Clave: this.state.TextInput_Clave,
-    // })
+
   } 
   
 //-----------------------------------------------------------------------------------
   Actualizar = () => {
     //Ahora vamos a codificar la funcion actualizar para consumir la Api
-    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/ActualizarPersona.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Asignatura/ActualizarAsignatura.php',{
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          id: this.state.TextInput_id,
-          nif: this.state.TextInput_nif,
-          nombre: this.state.TextInput_nombre,
-          apellido1: this.state.TextInput_apellido1,
-          apellido2: this.state.TextInput_apellido2,
-          ciudad: this.state.TextInput_ciudad,
-          direccion: this.state.TextInput_direccion,
-          telefono: this.state.TextInput_telefono,
-          fecha_nacimiento: this.state.TextInput_fecha_nacimiento,
-          sexo: this.state.TextInput_sexo,
-          tipo: this.state.TextInput_tipo,
+        id: this.state.TextInput_id,
+        nombre: this.state.TextInput_nombre,
+        creditos: this.state.TextInput_creditos,
+        tipo: this.state.TextInput_tipo,
+        curso: this.state.TextInput_curso,
+        cuatrimestre: this.state.TextInput_cuatrimestre,
+        id_profesor: this.state.TextInput_id_profesor,
+        id_grado: this.state.TextInput_id_grado,
       })
+
     }).then((response) => response.json())
 
       .then((responseJson) =>{
@@ -143,10 +123,20 @@ export default class Asignatura extends React.Component{
         console.error(error);
 
       });
+      console.log({
+        id: this.state.TextInput_id,
+        nombre: this.state.TextInput_nombre,
+        creditos: this.state.TextInput_creditos,
+        tipo: this.state.TextInput_tipo,
+        curso: this.state.TextInput_curso,
+        cuatrimestre: this.state.TextInput_cuatrimestre,
+        id_profesor: this.state.TextInput_id_profesor,
+        id_grado: this.state.TextInput_id_grado,
+      })
   }
 //-----------------------------------------------------------------------------------
   Borrar = () => {
-    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/EliminarPersona.php',{
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Asignatura/EliminarAsignatura.php',{
       method:'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -171,7 +161,7 @@ export default class Asignatura extends React.Component{
 //-----------------------------------------------------------------------------------
 
   Listar =  () => {
-    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Persona/BuscarPersona.php', {
+    fetch('http://192.168.1.59:8080/APIMatriculasSabado/Model/Asignatura/BuscarAsignatura.php', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -184,17 +174,14 @@ export default class Asignatura extends React.Component{
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          TextInput_nif: responseJson[0]['nif'],
           TextInput_nombre: responseJson[0]['nombre'],
-          TextInput_apellido1: responseJson[0]['apellido1'],
-          TextInput_apellido2: responseJson[0]['apellido2'],
-          TextInput_ciudad: responseJson[0]['ciudad'],
-          TextInput_direccion: responseJson[0]['direccion'],
-          TextInput_telefono: responseJson[0]['telefono'],
-          TextInput_fecha_nacimiento: responseJson[0]['fecha_nacimiento'],
-          TextInput_sexo: responseJson[0]['sexo'],
+          TextInput_creditos: responseJson[0]['creditos'],
           TextInput_tipo: responseJson[0]['tipo'],
-          TextInput_Clave: responseJson[0]['Clave']
+          TextInput_curso: responseJson[0]['curso'],
+          TextInput_cuatrimestre: responseJson[0]['cuatrimestre'],
+          TextInput_id_profesor: responseJson[0]['id_profesor'],
+          TextInput_id_grado: responseJson[0]['id_grado'],
+
         })
       }).catch((error) => {
         alert('No se encuentra el Id');
@@ -207,12 +194,11 @@ export default class Asignatura extends React.Component{
 
     <View style={MisEstilos.MainContainer}>
       <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 7,}}>
-        Registro de personas</Text>
+        Registro de Asignaturas</Text>
 
     <TextInput
       placeholder="Ingrese el ID de la persona"
       onChangeText={TextInputValue =>{
-        
         if ( /^\d+$/.test(TextInputValue))
         {
           this.setState({
@@ -233,20 +219,8 @@ export default class Asignatura extends React.Component{
     ></TextInput>
 
     <TextInput  
-      placeholder="Ingrese el NIF de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_nif: TextInputValue
-      })}//Se captura el dato
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_nif}
-      autoFocus={true}
-    ></TextInput>
-      
-    <TextInput
-      placeholder="Ingrese el nombre de la persona"
+      placeholder="Ingrese el nombre de la asignatura"
       onChangeText={TextInputValue =>{
-        
         if (/[a-zA-Z]+$/.test(TextInputValue))
         {
           this.setState({
@@ -265,100 +239,110 @@ export default class Asignatura extends React.Component{
       value={this.state.TextInput_nombre}
       autoFocus={true}
     ></TextInput>
-
+      
     <TextInput
-      placeholder="Ingrese el primer apellido de la persona"
+      placeholder="Ingrese creditos "
       onChangeText={TextInputValue =>{
-        
-        if (/[a-zA-Z]+$/.test(TextInputValue))
+        if ( /^\d+$/.test(TextInputValue))
         {
           this.setState({
-            TextInput_apellido1: TextInputValue
+            TextInput_creditos: TextInputValue
           });
 
         }else{
           this.setState({
-            TextInput_apellido1: ''
+            TextInput_creditos: ''
           });
         }
       }
     }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_apellido1}
+      value={this.state.TextInput_creditos}
       autoFocus={true}
     ></TextInput>
 
     <TextInput
-      placeholder="Ingrese el segundo apellido de la persona"
+      placeholder="Ingrese el tipo"
       onChangeText={TextInputValue =>{
-        
         if (/[a-zA-Z]+$/.test(TextInputValue))
         {
           this.setState({
-            TextInput_apellido2: TextInputValue
+            TextInput_tipo: TextInputValue
           });
 
         }else{
           this.setState({
-            TextInput_apellido2: ''
+            TextInput_tipo: ''
           });
         }
       }
     }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_apellido2}
+      value={this.state.TextInput_tipo}
       autoFocus={true}
     ></TextInput>
 
     <TextInput
-      placeholder="Ingrese la ciudad de la persona"
-      onChangeText={TextInputValue =>{
-        
-        if (/[a-zA-Z]+$/.test(TextInputValue))
-        {
-          this.setState({
-            TextInput_ciudad: TextInputValue
-          });
-
-        }else{
-          this.setState({
-            TextInput_ciudad: ''
-          });
-        }
-      }
-    }
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_ciudad}
-      autoFocus={true}
-    ></TextInput>
-
-    <TextInput
-      placeholder="Ingrese la dirección de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_direccion: TextInputValue
-      })}//Se captura el dato
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_direccion}
-      autoFocus={true}
-    ></TextInput>
-
-    <TextInput
-      placeholder="Ingrese el telefono de la persona"
+      placeholder="Ingrese el curso"
       onChangeText={TextInputValue =>{
         
         if ( /^\d+$/.test(TextInputValue))
         {
           this.setState({
-            TextInput_telefono: TextInputValue
+            TextInput_curso: TextInputValue
           });
 
         }else{
           this.setState({
-            TextInput_telefono: ''
+            TextInput_curso: ''
+          });
+        }
+      }
+    }
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_curso}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese el cuatrimestre"
+      onChangeText={TextInputValue =>{
+        
+        if ( /^\d+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_cuatrimestre: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_cuatrimestre: ''
+          });
+        }
+      }
+    }
+      underlineColorAndroid='transparent'
+      style={MisEstilos.TextInputStyleClass}
+      value={this.state.TextInput_cuatrimestre}
+      autoFocus={true}
+    ></TextInput>
+
+    <TextInput
+      placeholder="Ingrese el id del profesor"
+      onChangeText={TextInputValue =>{
+        
+        if ( /^\d+$/.test(TextInputValue))
+        {
+          this.setState({
+            TextInput_id_profesor: TextInputValue
+          });
+
+        }else{
+          this.setState({
+            TextInput_id_profesor: ''
           });
         }
       }
@@ -366,64 +350,30 @@ export default class Asignatura extends React.Component{
       underlineColorAndroid='transparent'
       keyboardType="number-pad"
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_telefono}
+      value={this.state.TextInput_id_profesor}
       autoFocus={true}
     ></TextInput>
 
     <TextInput
-      placeholder="Ingrese la fecha de nacimiento de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_fecha_nacimiento: TextInputValue
-      })}//Se captura el dato
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_fecha_nacimiento}
-      autoFocus={true}
-    ></TextInput>
-
-    <TextInput
-      placeholder="Ingrese el sexo de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_sexo: TextInputValue
-      })}//Se captura el dato
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_sexo}
-      autoFocus={true}
-    ></TextInput>
-
-    <TextInput
-      placeholder="Ingrese el tipo de la persona"
-      onChangeText={TextInputValue => this.setState({
-        TextInput_tipo: TextInputValue
-      })}//Se captura el dato
-      underlineColorAndroid='transparent'
-      style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_tipo}
-      autoFocus={true}
-    ></TextInput>
-
-    
-    <TextInput
-      placeholder="Ingrese la clave de la persona"
+      placeholder="Ingrese el id del grado"
       onChangeText={TextInputValue =>{
         
         if ( /^\d+$/.test(TextInputValue))
         {
           this.setState({
-            TextInput_Clave: TextInputValue
+            TextInput_id_grado: TextInputValue
           });
 
         }else{
           this.setState({
-            TextInput_Clave: ''
+            TextInput_id_grado: ''
           });
         }
       }
     }
       underlineColorAndroid='transparent'
       style={MisEstilos.TextInputStyleClass}
-      value={this.state.TextInput_Clave}
+      value={this.state.TextInput_id_grado}
       autoFocus={true}
     ></TextInput>
 
@@ -445,9 +395,9 @@ export default class Asignatura extends React.Component{
       <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => 
-          <TouchableOpacity onPress={() => alert(item.nif +" "+item.nombre +" "+item.apellido1 +" "+item.apellido2 +" "+item.ciudad)}
+          <TouchableOpacity onPress={() => alert(item.nombre +" "+item.creditos +" "+item.tipo)}
           style={MisEstilos.TouchableOpacityStyle2}>
-            <Text>                {item.nombre}               </Text>
+            <Text>                {item.id}               </Text>
           </TouchableOpacity>
         }
       />
